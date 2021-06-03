@@ -2,8 +2,8 @@ function randomNumber(from, to) {
   let message = document.querySelector('.notice__title');
   if (to <= from) {
     try { 
-      if(to < from)  throw 'Переданное значение «до» меньшее, чем значение «от»';
-      if(to === from) throw 'Переданное значение «до» равное значению «от».';
+      if(to < from)  throw '«до» меньшее, чем значение «от»';
+      if(to === from) throw '«до» равное значению «от».';
     }
     catch(err) {
       message.innerHTML = 'Переданное значение ' + err;
@@ -20,8 +20,8 @@ function randomCoordinates(from, to, quantityAfterDecimal) {
   let message = document.querySelector('.notice__title');
   if (to <= from) {
     try { 
-      if(to < from)  throw 'Переданное значение «до» меньшее, чем значение «от»';
-      if(to === from) throw 'Переданное значение «до» равное значению «от».';
+      if(to < from)  throw '«до» меньшее, чем значение «от»';
+      if(to === from) throw '«до» равное значению «от».';
     }
     catch(err) {
       message.innerHTML = 'Переданное значение ' + err;
