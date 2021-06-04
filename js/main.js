@@ -1,33 +1,43 @@
-function randomNumber(from, to) {
-  let message = document.querySelector('.notice__title');
-    try { 
-      if(to < from)  throw '«до» меньшее, чем значение «от»';
-      if(to === from) throw '«до» равное значению «от».';
-    }
-    catch(err) {
-      message.innerHTML = 'Переданное значение ' + err;
-    }
-  from = Math.ceil(from);
-  to = Math.floor(to);
-  return Math.floor(Math.random() * (to - from + 1)) + from;
+
+function showErrorMessage(err){
+  const message = document.querySelector('.notice__title');
+  message.innerHTML = `Переданное значение ${  err.message}`;
 }
 
-randomNumber(9, 30);
-
-function randomCoordinates(from, to, quantityAfterDecimal) {
-  let message = document.querySelector('.notice__title');
-    try { 
-      if(to < from)  throw '«до» меньшее, чем значение «от»';
-      if(to === from) throw '«до» равное значению «от».';
+function validate(from, to){
+  try {
+    if (to < from) {
+      throw new Error('«до» меньшее, чем значение «от»');
     }
-    catch(err) {
-      message.innerHTML = 'Переданное значение ' + err;
+    if (to === from) {
+      throw new Error('«до» равное значению «от».');
     }
-  from = Math.ceil(from);
-  to = Math.floor(to);
-  const number = Math.random() * (to - from + 1) + from;
-  const randomCoordinate = number.toFixed(quantityAfterDecimal);
-  return randomCoordinate;
+    return true;
+  } catch (err) {
+    showErrorMessage(err);
+    return false;
+  }
 }
 
-randomCoordinates(0, 9.8, 2);
+function getRandomNumber(from, to) {
+  if(!validate(from, to)){
+    return;
+  }
+  const roundedFrom = Math.ceil(from);
+  const roundedTo = Math.floor(to);
+
+  return Math.floor(Math.random() * (roundedTo - roundedFrom + 1)) + roundedFrom;
+}
+
+function getRandomCoordinates(from, to, quantityAfterDecimal) {
+  if(!validate(from, to)){
+    return;
+  }
+  const roundedFrom = Math.ceil(from);
+  const roundedTo = Math.floor(to);
+  const randomNumber = Math.random() * (roundedTo - roundedFrom + 1) + roundedFrom;
+  return randomNumber.toFixed(quantityAfterDecimal);
+}
+
+getRandomNumber(9, 30);
+getRandomCoordinates(0, 9.8, 2);
