@@ -1,7 +1,10 @@
 
-function showErrorMessage(err){
+function generateErrorMessage(err) {
   const message = document.querySelector('.notice__title');
-  message.innerHTML = `Переданное значение ${  err.message}`;
+  function showErrorMessage() {
+    message.innerHTML = `Переданное значение ${err.message}`;
+  }
+  showErrorMessage();
 }
 
 function validate(from, to){
@@ -14,7 +17,7 @@ function validate(from, to){
     }
     return true;
   } catch (err) {
-    showErrorMessage(err);
+    generateErrorMessage(err);
     return false;
   }
 }
@@ -39,5 +42,5 @@ function getRandomCoordinates(from, to, quantityAfterDecimal) {
   return randomNumber.toFixed(quantityAfterDecimal);
 }
 
-getRandomNumber(9, 30);
+getRandomNumber(5,9);
 getRandomCoordinates(0, 9.8, 2);
