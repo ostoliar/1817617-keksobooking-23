@@ -66,6 +66,7 @@ function getRandomNumber(from, to) {
     Math.floor(Math.random() * (roundedTo - roundedFrom + 1)) + roundedFrom
   );
 }
+
 function getRandomCoordinates(from, to, quantityAfterDecimal) {
   if (!validate(from, to)) {
     return;
@@ -74,6 +75,7 @@ function getRandomCoordinates(from, to, quantityAfterDecimal) {
   const roundedTo = Math.floor(to);
   const randomNumber =
     Math.random() * (roundedTo - roundedFrom) + roundedFrom;
+
   return randomNumber.toFixed(quantityAfterDecimal);
 }
 
