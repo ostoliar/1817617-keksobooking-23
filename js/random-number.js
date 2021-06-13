@@ -1,9 +1,7 @@
-function generateErrorMessage(err) {
-  const message = document.querySelector('.notice__title');
-  function showErrorMessage() {
-    message.innerHTML = `Переданное значение ${err.message}`;
-  }
-  showErrorMessage();
+const message = document.querySelector('.notice__title');
+
+function showErrorMessage(err) {
+  message.innerHTML = `Переданное значение ${err.message}`;
 }
 
 function validate(from, to){
@@ -16,7 +14,7 @@ function validate(from, to){
     }
     return true;
   } catch (err) {
-    generateErrorMessage(err);
+    showErrorMessage(err);
     return false;
   }
 }
