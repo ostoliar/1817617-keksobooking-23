@@ -1,27 +1,32 @@
 const message = document.querySelector('.notice__title');
 
 function showErrorMessage(err) {
-  message.innerHTML = `Переданное значение ${err.message}`;
+  message.innerHTML = `Переданное значение ${err}`;
 }
 
-function validate(from, to){
-  try {
-    if (to < from) {
-      throw new Error('«до» меньшее, чем значение «от»');
-    }
-    if (to === from) {
-      throw new Error('«до» равное значению «от».');
-    }
-    return true;
-  } catch (err) {
-    showErrorMessage(err);
-    return false;
-  }
-}
+// function getRandomNumber(from, to) {
+//   if (to < from) {
+//     throw new Error("«до» меньшее, чем значение «от»");
+//   }
+//   if (to === from) {
+//     throw new Error("«до» равное значению «от».");
+//   }
+//   const roundedFrom = Math.ceil(from);
+//   const roundedTo = Math.floor(to);
+
+//   return (
+//     Math.floor(Math.random() * (roundedTo - roundedFrom + 1)) + roundedFrom
+//   );
+// }
 
 function getRandomNumber(from, to) {
-  if (!validate(from, to)) {
-    return;
+  if (to < from) {
+    showErrorMessage('«до» меньшее, чем значение «от»');
+    return -1;
+  }
+  if (to === from) {
+    showErrorMessage('«до» равное значению «от».');
+    return -1;
   }
   const roundedFrom = Math.ceil(from);
   const roundedTo = Math.floor(to);
@@ -32,13 +37,17 @@ function getRandomNumber(from, to) {
 }
 
 function getRandomCoordinates(from, to, quantityAfterDecimal) {
-  if (!validate(from, to)) {
-    return;
+  if (to < from) {
+    showErrorMessage('«до» меньшее, чем значение «от»');
+    return -1;
+  }
+  if (to === from) {
+    showErrorMessage('«до» равное значению «от».');
+    return -1;
   }
   const roundedFrom = Math.ceil(from);
   const roundedTo = Math.floor(to);
-  const randomNumber =
-      Math.random() * (roundedTo - roundedFrom) + roundedFrom;
+  const randomNumber = Math.random() * (roundedTo - roundedFrom) + roundedFrom;
 
   return randomNumber.toFixed(quantityAfterDecimal);
 }
