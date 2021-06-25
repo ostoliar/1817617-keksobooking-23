@@ -1,60 +1,51 @@
 import { result } from './random-number.js';
 import { author, offer } from './create-offer.js';
 
-const template = document.querySelector('#card').content;
-const newItemTemplate = template.querySelector('.popup');
-const form = document.querySelector('.ad-form');
-const formTitle = form.querySelector('#title');
-const addressValue = form.querySelector('#address');
-const typeOfApartment = form.querySelector('#type');
-const priceArea = form.querySelector('#price');
-const timeIn = form.querySelector('#timein');
-const timeOut = form.querySelector('#timeout');
-const roomNumber = form.querySelector('#room_number');
-const capacity = form.querySelector('#capacity');
-const description = form.querySelector('#description');
-const photos = offer.photos;
-const newTemplate = newItemTemplate.cloneNode(true);
-const templateTimeArea = newTemplate.querySelector('.popup__text--time');
 
-function addTitle() {
-  const title = formTitle.value;
+const form = document.querySelector('.ad-form');
+const template = document.querySelector('#card').content;
+
+
+function setTitle(newTemplate, title) {
   const popupTitle = newTemplate.querySelector('.popup__title');
   popupTitle.textContent = title;
 }
 
-function addPrice() {
-  const formPrice = priceArea.value;
+function setPrice(newTemplate, price) {
   const templatePriceArea = newTemplate.querySelector('.popup__text--price');
-  templatePriceArea.textContent = formPrice;
+  templatePriceArea.textContent = price;
 }
 
-function addAddress() {
-  const formAddress = addressValue.value;
+function setAddress(newTemplate, address) {
   const templateAddress = newTemplate.querySelector('.popup__text--address');
-  templateAddress.textContent = formAddress;
+  templateAddress.textContent = address;
 }
 
-function addTypeOfApartment() {
-  const selectedTypeOfApartment = typeOfApartment.options[typeOfApartment.selectedIndex].text;
+function setApartmentType(newTemplate, appartmentType) {
   const templateTypeOfApartment = newTemplate.querySelector('.popup__type');
-  templateTypeOfApartment.textContent = selectedTypeOfApartment;
+  templateTypeOfApartment.textContent = appartmentType;
 }
 
-function addTimeArrival() {
+function setTimeArrival(newTemplate) {
+  const timeIn = form.querySelector('#timein');
+  const timeOut = form.querySelector('#timeout');
   const selectedTimeIn = timeIn.options[timeIn.selectedIndex].text;
   const selectedTimeOut = timeOut.options[timeOut.selectedIndex].text;
+  const templateTimeArea = newTemplate.querySelector('.popup__text--time');
   templateTimeArea.textContent = `Заезд  ${selectedTimeIn},  ${selectedTimeOut}`;
 }
 
-function addCapacity() {
+function setCapacity(newTemplate) {
+  const roomNumber = form.querySelector('#room_number');
+  const capacity = form.querySelector('#capacity');
   const selectedRoomNumber = roomNumber.options[roomNumber.selectedIndex].text;
   const selectedCapacity = capacity.options[capacity.selectedIndex].text;
   const templateCapacity = newTemplate.querySelector('.popup__text--capacity');
   templateCapacity.textContent = `${selectedRoomNumber}  ${selectedCapacity}`;
 }
 
-function addDescription() {
+function setDescription(newTemplate) {
+  const description = form.querySelector('#description');
   const descriptionAdded = description.value;
   const templateDescription = newTemplate.querySelector('.popup__description');
   templateDescription.textContent = descriptionAdded;
@@ -62,24 +53,19 @@ function addDescription() {
     templateDescription.style.display = 'none';
   }
 }
-function addAvatar() {
+function setAvatar(newTemplate) {
   const templateAvatar = newTemplate.querySelector('.popup__avatar');
   templateAvatar.src = `${author.avatar + 0 + result.data}.png`;
 }
 
-function addFeatures() {
-  const featureElements = form.querySelectorAll('.features input');
-  featureElements.forEach((featureElement) => {
-    if (featureElement.checked) {
-      return;
-    }
-    const value = featureElement.value;
-    const elem = newTemplate.querySelector(`.popup__feature--${value}`);
-    elem.parentNode.removeChild(elem);
+function setFeatures(newTemplate, selectedFeatures) {
+  selectedFeatures.forEach((selectedFeature) => {
+    const elem = newTemplate.querySelector(`.popup__feature--${selectedFeature}`);
+    elem.classList.add('show');
   });
 }
 
-function addPhotos() {
+function setPhotos(newTemplate, photos) {
   for(let index= 0; index < photos.length; index++) {
     const templatePhotos = newTemplate.querySelector('.popup__photos');
     const imgElement = document.createElement('img');
@@ -91,26 +77,45 @@ function addPhotos() {
   }
 }
 
+function getFormData(dataForm){
+  const appartmentTypeElement = form.querySelector('#type');
+  return {
+    title: dataForm.querySelector('#title').value,
+    price: dataForm.querySelector('#price').value,
+    selectedFeatures: [...dataForm.querySelectorAll('.features input:checked')].map((element) => element.value),
+    address: dataForm.querySelector('#address').value,
+    appartmentType: appartmentTypeElement.options[appartmentTypeElement.selectedIndex].text,
+  };
+}
+
+function cleanupForm(dataForm){
+  dataForm.querySelector('#title').value = '';
+  dataForm.querySelector('#address').value = '';
+}
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
+  const newItemTemplate = template.querySelector('.popup');
+  const newTemplate = newItemTemplate.cloneNode(true);
 
-  addFeatures(newTemplate);
-  addPhotos();
-  addTitle();
-  addAddress();
-  addPrice();
-  addTypeOfApartment();
-  addTimeArrival();
-  addCapacity();
-  addDescription();
-  addAvatar();
+  const formData = getFormData(form);
+
+  setFeatures(newTemplate, formData.selectedFeatures);
+  setPhotos(newTemplate, offer.photos);
+  setTitle(newTemplate, formData.title);
+  setAddress(newTemplate, formData.address);
+  setPrice(newTemplate, formData.price);
+  setApartmentType(newTemplate, formData.appartmentType);
+  setTimeArrival(newTemplate);
+  setCapacity(newTemplate);
+  setDescription(newTemplate);
+  setAvatar(newTemplate);
 
   form.appendChild(newTemplate);
 
-  formTitle.value = '';
-  addressValue.value = '';
+  cleanupForm(form);
 });
+
 
 export { template };
