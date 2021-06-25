@@ -1,3 +1,5 @@
+import { form } from './offer-template.js';
+
 const myMap = L.map('mapId').setView([35.6895, 139.69171], 13);
 
 const tileLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -9,10 +11,12 @@ const tileLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{
   accessToken: 'pk.eyJ1IjoiZXJ0ZWthIiwiYSI6ImNrcHgydmJrMjEyaDYybm56OHkzZWg4cjEifQ.DtvAiyAnZ6L54Jt7OCE7Dg',
 }).addTo(myMap);
 
-const form = document.querySelector('.ad-form');
+const formFilters = document.querySelector('.map__filters');
 
-
-tileLayer.on('load',() => { form.style.pointerEvents = 'none'; });
+tileLayer.on('load',() => {
+  form.classList.remove('ad-form--disabled');
+  formFilters.classList.remove('ad-form--disabled');
+});
 
 
 export {myMap, tileLayer};
