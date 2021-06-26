@@ -1,5 +1,5 @@
 import { formTitle } from './offer-template.js';
-import { priceArea } from './offer-template.js';
+import { priceArea, roomNumber, capacity } from './offer-template.js';
 
 
 formTitle.addEventListener('invalid', () => {
@@ -25,6 +25,16 @@ priceArea.addEventListener('input', () => {
   }
 });
 
+
+roomNumber.onchange =  function (evt){
+  const value = evt.target.value;
+  console.log(value);
+  if( value === 2) {
+    capacity.options[1].disabled = true;
+    //capacity.disabled = true;
+
+  }
+};
 
 export { formTitle, priceArea};
 

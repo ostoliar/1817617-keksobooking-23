@@ -113,4 +113,4 @@ form.addEventListener('submit', (evt) => {
   addressValue.value = '';
 });
 
-export { template, form, formTitle, priceArea };
+export { template, form, formTitle, priceArea, roomNumber , capacity};
