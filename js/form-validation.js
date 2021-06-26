@@ -1,6 +1,7 @@
-import { formTitle } from './offer-template.js';
-import { priceArea, roomNumber, capacity } from './offer-template.js';
+import { roomNumber, capacity } from './offer-template.js';
 
+
+const formTitle = document.querySelector('#title');
 
 formTitle.addEventListener('invalid', () => {
   if (formTitle.validity.tooShort) {
@@ -15,6 +16,8 @@ formTitle.addEventListener('invalid', () => {
   }
   formTitle.reportValidity();
 });
+
+const priceArea = document.querySelector('#price');
 
 priceArea.addEventListener('input', () => {
   if(priceArea.value > 1000000) {
