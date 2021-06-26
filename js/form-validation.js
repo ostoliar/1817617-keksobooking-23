@@ -1,4 +1,4 @@
-import { roomNumber, capacity } from './offer-template.js';
+import { roomNumber as roomNumberElement, capacity as capacityElement } from './offer-template.js';
 
 
 const formTitle = document.querySelector('#title');
@@ -28,16 +28,28 @@ priceArea.addEventListener('input', () => {
   }
 });
 
+function getNumericValue(value){
+  return Number.parseInt(value, 10);
+}
 
-roomNumber.onchange =  function (evt){
-  const value = evt.target.value;
-  console.log(value);
-  if( value === 2) {
-    capacity.options[1].disabled = true;
-    //capacity.disabled = true;
-
+function setElementDisabled(element, isDisabled){
+  if(isDisabled){
+    element.setAttribute('disabled', true);
+  }else{
+    element.removeAttribute('disabled');
   }
-};
+}
+
+function setAvailableCapacityOptions(){
+  const roomNumber = getNumericValue(roomNumberElement.value);
+  for(const option of capacityElement.options){
+    const capacity = getNumericValue(option.value);
+    setElementDisabled(option, roomNumber === 100 ? capacity !== 0 : capacity > roomNumber || capacity === 0);
+  }
+}
+
+roomNumberElement.onchange = setAvailableCapacityOptions;
+document.addEventListener('DOMContentLoaded', setAvailableCapacityOptions);
 
 export { formTitle, priceArea};
 
