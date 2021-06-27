@@ -117,4 +117,4 @@ form.addEventListener('submit', (evt) => {
   cleanupForm(form);
 });
 
-export { template, form, roomNumber as roomNumber, capacity as capacity};
+export { template, form, roomNumber as roomNumber, capacity as capacity };
