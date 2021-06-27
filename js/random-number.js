@@ -27,7 +27,7 @@ function getRandomNumber(from, to) {
   };
 }
 
-const result = getRandomNumber(2, 20);
+const result = getRandomNumber(1, 9);
 if(result.error){
   showErrorMessage(result.msg);
 }else{
@@ -65,4 +65,4 @@ if(resultCoordinates.error){
   result.data;
 }
 
-export {getRandomNumber, getRandomCoordinates};
+export {getRandomNumber, getRandomCoordinates, result};

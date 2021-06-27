@@ -61,4 +61,4 @@ const similarOffer = new Array(SIMILAR_OFFER_COUNT)
   .fill(null)
   .map(() => createOffer());
 
-export {similarOffer};
+export {similarOffer, author, offer};
