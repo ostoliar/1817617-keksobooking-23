@@ -767,7 +767,10 @@ fieldset {
 /**
  * Карточка объявления
  */
-
+#mapId {
+  width: 100%;
+  height: 100%;
+}
 .popup {
   position: relative;
   width: 250px;

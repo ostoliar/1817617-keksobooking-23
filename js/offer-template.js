@@ -117,5 +117,4 @@ form.addEventListener('submit', (evt) => {
   cleanupForm(form);
 });
 
-
-export { template };
+export { template, form };
