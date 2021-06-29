@@ -18,5 +18,15 @@ tileLayer.on('load',() => {
   formFilters.classList.remove('ad-form--disabled');
 });
 
+const markerLatitude = 35.6995;
+const markerLongitude = 139.70171;
+const marker = L.marker(
+  {
+    lat: markerLatitude,
+    lng: markerLongitude,
+  },
+);
+
+marker.addTo(myMap);
 
 export {myMap, tileLayer};
