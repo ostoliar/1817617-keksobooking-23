@@ -24,15 +24,42 @@ tileLayer.on('load',() => {
   formFilters.classList.remove('ad-form--disabled');
 });
 
-const markerLatitude = 35.6995;
-const markerLongitude = 139.70171;
-const marker = L.marker(
+const mainMarker = L.marker(
   {
-    lat: markerLatitude,
-    lng: markerLongitude,
+    lat: latitude,
+    lng: longitude,
+  },
+  {
+    draggable: true,
   },
 );
 
-marker.addTo(myMap);
+mainMarker.addTo(myMap);
 
+const SetMarkerCoordinates = document.querySelector('#address');
+mainMarker.on('moveend', (evt) => {
+  const targetCoordinates = evt.target.getLatLng();
+  const targetLatitude = targetCoordinates.lat.toFixed(5);
+  const targetLongitude = targetCoordinates.lng.toFixed(5);
+  SetMarkerCoordinates.value = `lat: ${targetLatitude}, lng: ${targetLongitude}` ;
+});
+
+const submitButton = document.querySelector('.ad-form__submit');
+submitButton.addEventListener('click', () => {
+  mainMarker.setLatLng({
+    lat: latitude,
+    lng: longitude,
+  }),
+  L.marker(
+    {
+      lat: 35.64463,
+      lng: 139.78289,
+    },
+  );
+  addTo(myMap);
+});
+
+
+
+//console.log(targetCoordinates)
 export {myMap, tileLayer};
