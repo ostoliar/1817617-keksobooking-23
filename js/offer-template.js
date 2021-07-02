@@ -1,12 +1,7 @@
-import { result } from './random-number.js';
+import { getRandomNumber } from './random-number.js';
 import { author, offer } from './create-offer.js';
 
-
-const form = document.querySelector('.ad-form');
 const template = document.querySelector('#card').content;
-const roomNumber = form.querySelector('#room_number');
-const capacity = form.querySelector('#capacity');
-
 
 function setTitle(newTemplate, title) {
   const popupTitle = newTemplate.querySelector('.popup__title');
@@ -28,34 +23,26 @@ function setApartmentType(newTemplate, appartmentType) {
   templateTypeOfApartment.textContent = appartmentType;
 }
 
-function setTimeArrival(newTemplate) {
-  const timeIn = form.querySelector('#timein');
-  const timeOut = form.querySelector('#timeout');
-  const selectedTimeIn = timeIn.options[timeIn.selectedIndex].text;
-  const selectedTimeOut = timeOut.options[timeOut.selectedIndex].text;
+function setTimeArrival(newTemplate, timeIn, timeOut) {
   const templateTimeArea = newTemplate.querySelector('.popup__text--time');
-  templateTimeArea.textContent = `Заезд  ${selectedTimeIn},  ${selectedTimeOut}`;
+  templateTimeArea.textContent = `Заезд  ${timeIn},  ${timeOut}`;
 }
 
-function setCapacity(newTemplate) {
-  const selectedRoomNumber = roomNumber.options[roomNumber.selectedIndex].text;
-  const selectedCapacity = capacity.options[capacity.selectedIndex].text;
+function setCapacity(newTemplate, roomNumber, capacity) {
   const templateCapacity = newTemplate.querySelector('.popup__text--capacity');
-  templateCapacity.textContent = `${selectedRoomNumber}  ${selectedCapacity}`;
+  templateCapacity.textContent = `${roomNumber}  ${capacity}`;
 }
 
-function setDescription(newTemplate) {
-  const description = form.querySelector('#description');
-  const descriptionAdded = description.value;
+function setDescription(newTemplate, description) {
   const templateDescription = newTemplate.querySelector('.popup__description');
-  templateDescription.textContent = descriptionAdded;
-  if (descriptionAdded === '') {
+  templateDescription.textContent = description;
+  if (description === '') {
     templateDescription.style.display = 'none';
   }
 }
-function setAvatar(newTemplate) {
+function setAvatar(newTemplate, avatar) {
   const templateAvatar = newTemplate.querySelector('.popup__avatar');
-  templateAvatar.src = `${author.avatar + 0 + result.data}.png`;
+  templateAvatar.src = `${avatar + 0 + getRandomNumber(1, 9).result}.png`;
 }
 
 function setFeatures(newTemplate, selectedFeatures) {
@@ -77,29 +64,9 @@ function setPhotos(newTemplate, photos) {
   }
 }
 
-function getFormData(dataForm){
-  const appartmentTypeElement = form.querySelector('#type');
-  return {
-    title: dataForm.querySelector('#title').value,
-    price: dataForm.querySelector('#price').value,
-    selectedFeatures: [...dataForm.querySelectorAll('.features input:checked')].map((element) => element.value),
-    address: dataForm.querySelector('#address').value,
-    appartmentType: appartmentTypeElement.options[appartmentTypeElement.selectedIndex].text,
-  };
-}
-
-function cleanupForm(dataForm){
-  dataForm.querySelector('#title').value = '';
-  dataForm.querySelector('#address').value = '';
-}
-
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
+export function getOfferTemplate(formData){
   const newItemTemplate = template.querySelector('.popup');
   const newTemplate = newItemTemplate.cloneNode(true);
-
-  const formData = getFormData(form);
 
   setFeatures(newTemplate, formData.selectedFeatures);
   setPhotos(newTemplate, offer.photos);
@@ -107,14 +74,11 @@ form.addEventListener('submit', (evt) => {
   setAddress(newTemplate, formData.address);
   setPrice(newTemplate, formData.price);
   setApartmentType(newTemplate, formData.appartmentType);
-  setTimeArrival(newTemplate);
-  setCapacity(newTemplate);
-  setDescription(newTemplate);
-  setAvatar(newTemplate);
+  setTimeArrival(newTemplate, formData.timeIn, formData.timeOut);
+  setCapacity(newTemplate, formData.roomNumber, formData.capacity);
+  setDescription(newTemplate, formData.description);
+  setAvatar(newTemplate, author.avatar);
+  return newTemplate;
+}
 
-  form.appendChild(newTemplate);
-
-  cleanupForm(form);
-});
-
-export { template, form, roomNumber as roomNumber, capacity as capacity};
+export { template };

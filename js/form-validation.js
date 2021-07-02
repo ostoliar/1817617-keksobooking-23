@@ -1,7 +1,7 @@
 import {
   roomNumber as roomNumberElement,
   capacity as capacityElement
-} from './offer-template.js';
+} from './form.js';
 
 const formTitle = document.querySelector('#title');
 

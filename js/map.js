@@ -1,4 +1,4 @@
-import { form } from './offer-template.js';
+import { form } from './form.js';
 
 const webToken = 'pk.eyJ1IjoiZXJ0ZWthIiwiYSI6ImNrcHgydmJrMjEyaDYybm56OHkzZWg4cjEifQ.DtvAiyAnZ6L54Jt7OCE7Dg';
 const latitude = 35.6895;
@@ -57,9 +57,7 @@ mainMarker.on('moveend', (evt) => {
   setMarkerCoordinates.value = `lat: ${targetLatitude}, lng: ${targetLongitude}` ;
 });
 
-
-const submitButton = document.querySelector('.ad-form__submit');
-submitButton.addEventListener('click', () => {
+export function setMapMarkers(offerTemplate){
   mainMarker.setLatLng({
     lat: latitude,
     lng: longitude,
@@ -71,9 +69,8 @@ submitButton.addEventListener('click', () => {
         lng: coordinates.lng,
       },
     ).addTo(myMap)
-      .bindPopup();
+      .bindPopup(offerTemplate);
   }
-});
-
+}
 
 export {myMap, tileLayer};

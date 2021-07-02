@@ -1,10 +1,4 @@
-const message = document.querySelector('.notice__title');
-
-function showErrorMessage(err) {
-  message.innerHTML = `Переданное значение ${err}`;
-}
-
-function getRandomNumber(from, to) {
+export function getRandomNumber(from, to) {
   if (to < from) {
     return {
       error: true,
@@ -27,14 +21,7 @@ function getRandomNumber(from, to) {
   };
 }
 
-const result = getRandomNumber(1, 9);
-if(result.error){
-  showErrorMessage(result.msg);
-}else{
-  result.data;
-}
-
-function getRandomCoordinates(from, to, quantityAfterDecimal) {
+export function getRandomCoordinates(from, to, quantityAfterDecimal) {
   if (to < from) {
     return {
       error: true,
@@ -57,12 +44,3 @@ function getRandomCoordinates(from, to, quantityAfterDecimal) {
     data: coordinates,
   };
 }
-
-const resultCoordinates = getRandomCoordinates(4, 20);
-if(resultCoordinates.error){
-  showErrorMessage(resultCoordinates.msg);
-}else{
-  result.data;
-}
-
-export {getRandomNumber, getRandomCoordinates, result};
