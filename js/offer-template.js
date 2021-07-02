@@ -4,6 +4,8 @@ import { author, offer } from './create-offer.js';
 
 const form = document.querySelector('.ad-form');
 const template = document.querySelector('#card').content;
+const roomNumber = form.querySelector('#room_number');
+const capacity = form.querySelector('#capacity');
 
 
 function setTitle(newTemplate, title) {
@@ -36,8 +38,6 @@ function setTimeArrival(newTemplate) {
 }
 
 function setCapacity(newTemplate) {
-  const roomNumber = form.querySelector('#room_number');
-  const capacity = form.querySelector('#capacity');
   const selectedRoomNumber = roomNumber.options[roomNumber.selectedIndex].text;
   const selectedCapacity = capacity.options[capacity.selectedIndex].text;
   const templateCapacity = newTemplate.querySelector('.popup__text--capacity');
@@ -117,4 +117,4 @@ form.addEventListener('submit', (evt) => {
   cleanupForm(form);
 });
 
-export { template, form };
+export { template, form, roomNumber as roomNumber, capacity as capacity};
