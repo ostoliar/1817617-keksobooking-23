@@ -71,4 +71,30 @@ function setAvailableCapacityOptions() {
 roomNumberElement.onchange = setAvailableCapacityOptions;
 document.addEventListener('DOMContentLoaded', setAvailableCapacityOptions);
 
+const appartmentType = document.querySelector('#type');
+const appartmentPrice = {
+  bungalow: 0,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000,
+};
+
+appartmentType.onchange =  function (evt){
+  const selectedAppartmentType = evt.target.value;
+  const expectedPrice = appartmentPrice[selectedAppartmentType];
+  if(priceArea.value < expectedPrice){
+    priceArea.placeholder = expectedPrice;
+    priceArea.setCustomValidity(`Значение должно быть более или равно ${expectedPrice}`);
+  }
+};
+
+const timeIn = document.querySelector('#timein');
+const timeOut = document.querySelector('#timeout');
+
+timeIn.onchange =  function (evt){
+  const timeInValue = evt.target.value;
+  timeOut.querySelector(`[value='${timeInValue}']`).selected = 'selected';
+};
+
+
 export { formTitle, priceArea };
