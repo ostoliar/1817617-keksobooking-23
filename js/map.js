@@ -44,28 +44,36 @@ const mainMarker = L.marker(
 mainMarker.addTo(myMap);
 
 
-const SetMarkerCoordinates = document.querySelector('#address');
+const setMarkerCoordinates = document.querySelector('#address');
+let coordinates = null;
 mainMarker.on('moveend', (evt) => {
   const targetCoordinates = evt.target.getLatLng();
   const targetLatitude = targetCoordinates.lat.toFixed(5);
   const targetLongitude = targetCoordinates.lng.toFixed(5);
-  SetMarkerCoordinates.value = `lat: ${targetLatitude}, lng: ${targetLongitude}` ;
+  coordinates = {
+    lat: targetLatitude,
+    lng: targetLongitude,
+  };
+  setMarkerCoordinates.value = `lat: ${targetLatitude}, lng: ${targetLongitude}` ;
 });
+
 
 const submitButton = document.querySelector('.ad-form__submit');
 submitButton.addEventListener('click', () => {
   mainMarker.setLatLng({
     lat: latitude,
     lng: longitude,
-  }),
-  L.marker(
-    {
-      lat: 35.68847,
-      lng: 139.73432,
-    },
-  ).addTo(myMap);
+  });
+  if (coordinates){
+    L.marker(
+      {
+        lat: coordinates.lat,
+        lng: coordinates.lng,
+      },
+    ).addTo(myMap)
+      .bindPopup();
+  }
 });
 
 
-//console.log(targetCoordinates)
 export {myMap, tileLayer};
