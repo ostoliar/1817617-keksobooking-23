@@ -24,6 +24,12 @@ tileLayer.on('load',() => {
   formFilters.classList.remove('ad-form--disabled');
 });
 
+const mainPinIcon = L.icon({
+  iconUrl: '/img/main-icon.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+
 const mainMarker = L.marker(
   {
     lat: latitude,
@@ -31,10 +37,12 @@ const mainMarker = L.marker(
   },
   {
     draggable: true,
+    icon: mainPinIcon,
   },
 );
 
 mainMarker.addTo(myMap);
+
 
 const SetMarkerCoordinates = document.querySelector('#address');
 mainMarker.on('moveend', (evt) => {
@@ -52,13 +60,11 @@ submitButton.addEventListener('click', () => {
   }),
   L.marker(
     {
-      lat: 35.64463,
-      lng: 139.78289,
+      lat: 35.68847,
+      lng: 139.73432,
     },
-  );
-  addTo(myMap);
+  ).addTo(myMap);
 });
-
 
 
 //console.log(targetCoordinates)
