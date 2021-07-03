@@ -30,8 +30,7 @@ tileLayer.on('load', () => {
 });
 
 const mainPinIcon = L.icon({
-  iconUrl: '/img/main-pin.png',
-  shadowUrl: '/img/main-pin.svg',
+  iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 });
