@@ -1,6 +1,6 @@
 import {
   roomNumber as roomNumberElement,
-  capacity as capacityElement,
+  capacity as capacityElement
 } from './form.js';
 
 const formTitle = document.querySelector('#title');
@@ -8,11 +8,11 @@ const formTitle = document.querySelector('#title');
 function checkTitleValidity() {
   if (formTitle.validity.tooShort) {
     formTitle.setCustomValidity(
-      `Имя должно состоять минимум из ${formTitle.minLength} символов. Введено ${formTitle.value.length} символов`
+      `Имя должно состоять минимум из ${formTitle.minLength} символов. Введено ${formTitle.value.length} символов`,
     );
   } else if (formTitle.validity.tooLong) {
     formTitle.setCustomValidity(
-      `Имя не должно превышать ${formTitle.maxLength} символов`
+      `Имя не должно превышать ${formTitle.maxLength} символов`,
     );
   } else if (formTitle.validity.valueMissing) {
     formTitle.setCustomValidity('Обязательное поле');
@@ -85,7 +85,7 @@ appartmentType.onchange = function (evt) {
   if (priceArea.value < expectedPrice) {
     priceArea.placeholder = expectedPrice;
     priceArea.setCustomValidity(
-      `Значение должно быть более или равно ${expectedPrice}`
+      `Значение должно быть более или равно ${expectedPrice}`,
     );
   }
 };
