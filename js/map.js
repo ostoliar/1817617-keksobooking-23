@@ -30,9 +30,9 @@ tileLayer.on('load', () => {
 });
 
 const mainPinIcon = L.icon({
-  iconUrl: '/img/main-icon.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconUrl: '/leaflet/images/marker-icon-2x.png',
+  iconSize: [50, 82],
+  iconAnchor: [25, 82],
 });
 
 const mainMarker = L.marker(
