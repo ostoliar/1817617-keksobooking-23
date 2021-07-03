@@ -48,7 +48,7 @@ function setAvatar(newTemplate, avatar) {
 function setFeatures(newTemplate, selectedFeatures) {
   selectedFeatures.forEach((selectedFeature) => {
     const elem = newTemplate.querySelector(
-      `.popup__feature--${selectedFeature}`
+      `.popup__feature--${selectedFeature}`,
     );
     elem.classList.add('show');
   });

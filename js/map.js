@@ -43,7 +43,7 @@ const mainMarker = L.marker(
   {
     draggable: true,
     icon: mainPinIcon,
-  }
+  },
 );
 
 mainMarker.addTo(myMap);
