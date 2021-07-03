@@ -31,6 +31,7 @@ tileLayer.on('load', () => {
 
 const mainPinIcon = L.icon({
   iconUrl: '/img/main-pin.png',
+  shadowUrl: '/img/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 });
