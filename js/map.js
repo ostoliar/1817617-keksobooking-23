@@ -1,13 +1,15 @@
 import { form } from './form.js';
 
-const webToken = 'pk.eyJ1IjoiZXJ0ZWthIiwiYSI6ImNrcHgydmJrMjEyaDYybm56OHkzZWg4cjEifQ.DtvAiyAnZ6L54Jt7OCE7Dg';
+const webToken =
+  'pk.eyJ1IjoiZXJ0ZWthIiwiYSI6ImNrcHgydmJrMjEyaDYybm56OHkzZWg4cjEifQ.DtvAiyAnZ6L54Jt7OCE7Dg';
 const latitude = 35.6895;
 const longitude = 139.69171;
 
 // L - its var of leaflet library
 const myMap = L.map('mapId').setView([latitude, longitude], 13);
 const leafletOptions = {
-  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  attribution:
+    'Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors, Imagery © <a href='https://www.mapbox.com/'>Mapbox</a>',
   maxZoom: 18,
   id: 'mapbox/streets-v11',
   tileSize: 512,
@@ -15,11 +17,14 @@ const leafletOptions = {
   accessToken: webToken,
 };
 
-const tileLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', leafletOptions).addTo(myMap);
+const tileLayer = L.tileLayer(
+  'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
+  leafletOptions
+).addTo(myMap);
 
 const formFilters = document.querySelector('.map__filters');
 
-tileLayer.on('load',() => {
+tileLayer.on('load', () => {
   form.classList.remove('ad-form--disabled');
   formFilters.classList.remove('ad-form--disabled');
 });
@@ -38,11 +43,10 @@ const mainMarker = L.marker(
   {
     draggable: true,
     icon: mainPinIcon,
-  },
+  }
 );
 
 mainMarker.addTo(myMap);
-
 
 const setMarkerCoordinates = document.querySelector('#address');
 let coordinates = null;
@@ -54,23 +58,22 @@ mainMarker.on('moveend', (evt) => {
     lat: targetLatitude,
     lng: targetLongitude,
   };
-  setMarkerCoordinates.value = `lat: ${targetLatitude}, lng: ${targetLongitude}` ;
+  setMarkerCoordinates.value = `lat: ${targetLatitude}, lng: ${targetLongitude}`;
 });
 
-export function setMapMarkers(offerTemplate){
+export function setMapMarkers(offerTemplate) {
   mainMarker.setLatLng({
     lat: latitude,
     lng: longitude,
   });
-  if (coordinates){
-    L.marker(
-      {
-        lat: coordinates.lat,
-        lng: coordinates.lng,
-      },
-    ).addTo(myMap)
+  if (coordinates) {
+    L.marker({
+      lat: coordinates.lat,
+      lng: coordinates.lng,
+    })
+      .addTo(myMap)
       .bindPopup(offerTemplate);
   }
 }
 
-export {myMap, tileLayer};
+export { myMap, tileLayer };

@@ -47,13 +47,15 @@ function setAvatar(newTemplate, avatar) {
 
 function setFeatures(newTemplate, selectedFeatures) {
   selectedFeatures.forEach((selectedFeature) => {
-    const elem = newTemplate.querySelector(`.popup__feature--${selectedFeature}`);
+    const elem = newTemplate.querySelector(
+      `.popup__feature--${selectedFeature}`
+    );
     elem.classList.add('show');
   });
 }
 
 function setPhotos(newTemplate, photos) {
-  for(let index= 0; index < photos.length; index++) {
+  for (let index = 0; index < photos.length; index++) {
     const templatePhotos = newTemplate.querySelector('.popup__photos');
     const imgElement = document.createElement('img');
     imgElement.setAttribute('src', photos[index]);
@@ -64,7 +66,7 @@ function setPhotos(newTemplate, photos) {
   }
 }
 
-export function getOfferTemplate(formData){
+export function getOfferTemplate(formData) {
   const newItemTemplate = template.querySelector('.popup');
   const newTemplate = newItemTemplate.cloneNode(true);
 
