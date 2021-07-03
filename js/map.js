@@ -29,10 +29,15 @@ tileLayer.on('load', () => {
   formFilters.classList.remove('ad-form--disabled');
 });
 
-const mainPinIcon = L.icon({
-  iconUrl: '/leaflet/images/marker-icon-2x.png',
-  iconSize: [50, 82],
-  iconAnchor: [25, 82],
+const mainPinIcon = L.Icon.extend({
+  options: {
+    iconSize: [52, 52],
+    iconAnchor: [26, 52],
+  },
+});
+
+const redIcon = new mainPinIcon({
+  iconUrl: '/img/main-icon.svg',
 });
 
 const mainMarker = L.marker(
@@ -42,7 +47,7 @@ const mainMarker = L.marker(
   },
   {
     draggable: true,
-    icon: mainPinIcon,
+    icon: redIcon,
   },
 );
 
