@@ -10,4 +10,3 @@ myMap;
 priceArea;
 formTitle;
 
-
