@@ -72,7 +72,7 @@ roomNumberElement.onchange = setAvailableCapacityOptions;
 document.addEventListener('DOMContentLoaded', setAvailableCapacityOptions);
 
 const appartmentType = document.querySelector('#type');
-const APPARTMENTPRICE = {
+const appartmentPrice = {
   bungalow: 0,
   hotel: 3000,
   house: 5000,
@@ -81,7 +81,7 @@ const APPARTMENTPRICE = {
 
 appartmentType.onchange = function (evt) {
   const selectedAppartmentType = evt.target.value;
-  const expectedPrice = APPARTMENTPRICE[selectedAppartmentType];
+  const expectedPrice = appartmentPrice[selectedAppartmentType];
   if (priceArea.value < expectedPrice) {
     priceArea.placeholder = expectedPrice;
     priceArea.setCustomValidity(

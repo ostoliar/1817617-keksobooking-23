@@ -61,20 +61,24 @@ mainMarker.on('moveend', (evt) => {
   };
   setMarkerCoordinates.value = `lat: ${targetLatitude}, lng: ${targetLongitude}`;
 });
+export function setMapMarker(location, offerTemplate) {
+  L.marker(location)
+    .addTo(myMap)
+    .bindPopup(offerTemplate);
+}
 
-export function setMapMarkers(offerTemplate) {
+export function setSubmittedMapMarker(offerTemplate) {
+  if (coordinates) {
+    setMapMarker(coordinates, offerTemplate);
+  }
+}
+
+export function resetMainMarker() {
   mainMarker.setLatLng({
     lat: latitude,
     lng: longitude,
   });
-  if (coordinates) {
-    L.marker({
-      lat: coordinates.lat,
-      lng: coordinates.lng,
-    })
-      .addTo(myMap)
-      .bindPopup(offerTemplate);
-  }
 }
+
 
 export { myMap, tileLayer };

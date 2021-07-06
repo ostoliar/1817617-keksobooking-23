@@ -1,5 +1,7 @@
 import { getOfferTemplate } from './offer-template.js';
-import { setMapMarkers } from './map.js';
+import { setSubmittedMapMarker, resetMainMarker } from './map.js';
+import {  offer } from './create-offer.js';
+
 
 const form = document.querySelector('.ad-form');
 const roomNumberElement = form.querySelector('#room_number');
@@ -12,17 +14,18 @@ function getFormData(dataForm) {
   return {
     title: dataForm.querySelector('#title').value,
     price: dataForm.querySelector('#price').value,
-    selectedFeatures: [
+    features: [
       ...dataForm.querySelectorAll('.features input:checked'),
     ].map((element) => element.value),
     address: dataForm.querySelector('#address').value,
-    appartmentType:
+    type:
       appartmentTypeElement.options[appartmentTypeElement.selectedIndex].text,
     description: form.querySelector('#description').value,
-    roomNumber: roomNumberElement.options[roomNumberElement.selectedIndex].text,
-    capacity: capacityElement.options[capacityElement.selectedIndex].text,
-    timeIn: timeInElement.options[timeInElement.selectedIndex].text,
-    timeOut: timeOutElement.options[timeOutElement.selectedIndex].text,
+    rooms: roomNumberElement.options[roomNumberElement.selectedIndex].text,
+    guests: capacityElement.options[capacityElement.selectedIndex].text,
+    checkin: timeInElement.options[timeInElement.selectedIndex].text,
+    checkout: timeOutElement.options[timeOutElement.selectedIndex].text,
+    photos: offer.photos,
   };
 }
 
@@ -35,7 +38,9 @@ form.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const formData = getFormData(form);
   const offerTemplate = getOfferTemplate(formData);
-  setMapMarkers(offerTemplate);
+  setSubmittedMapMarker(offerTemplate);
+  resetMainMarker();
+
 
   cleanupForm(form);
 });
