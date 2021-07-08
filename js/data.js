@@ -1,9 +1,14 @@
 import { getOfferTemplate } from './offer-template.js';
 import { setMapMarker } from './map.js';
 import { showAlert} from './utils.js';
+import { closeSuccessAlertMessage, closeServerAlertMessage} from './main.js';
+
+const mainBlock = document.querySelector('.notice');
 
 function showServerErrorAlert(){
-  showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+  const errorTemplate = document.querySelector('#error').content;
+  const errorMessage = errorTemplate.cloneNode(true);
+  mainBlock.appendChild(errorMessage);
 }
 
 function showServerSubmitErrorAlert(){
@@ -13,7 +18,6 @@ function showServerSubmitErrorAlert(){
 function showRequestSuccessMessage() {
   const successTemplate = document.querySelector('#success').content;
   const successMessage = successTemplate.cloneNode(true);
-  const mainBlock = document.querySelector('.notice');
   mainBlock.appendChild(successMessage);
 }
 
@@ -50,8 +54,10 @@ export function postOffer(offerData, onSuccess){
       if (response.ok) {
         showRequestSuccessMessage();
         onSuccess();
+        closeSuccessAlertMessage();
       } else {
         showServerErrorAlert();
+        closeServerAlertMessage();
       }
     })
     .catch(() => {
