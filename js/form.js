@@ -1,7 +1,7 @@
 import { getOfferTemplate } from './offer-template.js';
 import { setSubmittedMapMarker, resetMainMarker } from './map.js';
-import {  offer } from './create-offer.js';
-
+import { offer } from './create-offer.js';
+import { postOffer } from './data.js';
 
 const form = document.querySelector('.ad-form');
 const roomNumberElement = form.querySelector('#room_number');
@@ -34,15 +34,18 @@ function cleanupForm(dataForm) {
   dataForm.querySelector('#address').value = '';
 }
 
+
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const formData = getFormData(form);
   const offerTemplate = getOfferTemplate(formData);
   setSubmittedMapMarker(offerTemplate);
-  resetMainMarker();
+  const offerData = new FormData(form);
 
-
-  cleanupForm(form);
+  postOffer(offerData, () => {
+    resetMainMarker();
+    cleanupForm(form);
+  });
 });
 
 export { form, roomNumberElement as roomNumber, capacityElement as capacity };

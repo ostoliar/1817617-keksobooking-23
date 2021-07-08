@@ -2,7 +2,7 @@ import { form } from './form.js';
 
 const webToken =
   'pk.eyJ1IjoiZXJ0ZWthIiwiYSI6ImNrcHgydmJrMjEyaDYybm56OHkzZWg4cjEifQ.DtvAiyAnZ6L54Jt7OCE7Dg';
-const latitude = 35.6895;
+const latitude = 35.6795;
 const longitude = 139.69171;
 
 // L - its var of leaflet library
