@@ -3,6 +3,23 @@ import {
   capacity as capacityElement
 } from './form.js';
 
+const addressCoordinates = document.querySelector('#address');
+
+function checkAddressValidity(){
+  if (addressCoordinates.validity.valueMissing) {
+    addressCoordinates.setCustomValidity('Обязательное поле, перетяните главный красный маркер на карте для установки адреса');
+  } else {
+    addressCoordinates.setCustomValidity('');
+  }
+}
+
+function reportAddressValidity() {
+  checkAddressValidity();
+  addressCoordinates.reportValidity();
+}
+
+addressCoordinates.addEventListener('input', reportAddressValidity);
+
 const formTitle = document.querySelector('#title');
 
 function checkTitleValidity() {
@@ -30,8 +47,6 @@ formTitle.addEventListener('blur', reportTitleValidity);
 formTitle.addEventListener('invalid', () => {
   formTitle.addEventListener('input', reportTitleValidity);
 });
-document.addEventListener('DOMContentLoaded', checkTitleValidity);
-
 
 function getNumericValue(value) {
   return Number.parseInt(value, 10);
@@ -70,49 +85,37 @@ const appartmentPrice = {
   palace: 10000,
 };
 
-const priceArea = document.querySelector('#price');
+const priceInput = document.querySelector('#price');
 
-appartmentType.onchange = function (evt) {
-  const selectedAppartmentType = evt.target.value;
-  const expectedPrice = appartmentPrice[selectedAppartmentType];
-  if (priceArea.value < expectedPrice) {
-    priceArea.placeholder = expectedPrice;
-    priceArea.setCustomValidity(`Значение должно быть более или равно ${expectedPrice}`);
-
+function reportPriceValidity(){
+  if (priceInput.validity.rangeUnderflow) {
+    priceInput.setCustomValidity(`Значение должно быть более или равно ${priceInput.min}`);
+  } else if (priceInput.validity.rangeOverflow) {
+    priceInput.setCustomValidity(
+      `Значение не должно превышать ${priceInput.max} символов`,
+    );
+  } else if (priceInput.validity.valueMissing) {
+    priceInput.setCustomValidity('Обязательное поле');
+  } else {
+    priceInput.setCustomValidity('');
   }
-};
 
-// function setExpectedPrice(evt) {
-//   const selectedAppartmentType = evt.target.value;
-//   const expectedPrice = appartmentPrice[selectedAppartmentType];
-//   if (priceArea.value < expectedPrice) {
-//     priceArea.placeholder = expectedPrice;
-//     priceArea.setCustomValidity(`Значение должно быть более или равно ${expectedPrice}`);
-//   }
-// }
-
-// appartmentType.onchange = setExpectedPrice;
+  priceInput.reportValidity();
+}
 
 
-priceArea.addEventListener('input', () => {
-  if (priceArea.value > 1000000) {
-    priceArea.setCustomValidity('Значение должно быть не более 1000000');
-  }
-  if (priceArea.value < 0) {
-    priceArea.setCustomValidity('Значение должно быть больше 0');
-  }
+function updatePriceMinValue(){
+  const selectedAppartmentType = appartmentType.value;
+  const minPrice = appartmentPrice[selectedAppartmentType];
+  priceInput.min = minPrice;
+  priceInput.placeholder = minPrice;
+}
+appartmentType.onchange = updatePriceMinValue;
+priceInput.addEventListener('blur', reportPriceValidity);
+priceInput.addEventListener('invalid', () => {
+  priceInput.addEventListener('input', reportPriceValidity);
 });
 
-// function validatePrice () {
-//   if (priceArea.value > 1000000) {
-//     priceArea.setCustomValidity('Значение должно быть не более 1000000');
-//   }
-//   if (priceArea.value < 0) {
-//     priceArea.setCustomValidity('Значение должно быть больше 0');
-//   }
-// }
-
-// priceArea.onchange = validatePrice;
 
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
@@ -122,4 +125,11 @@ timeIn.onchange = function (evt) {
   timeOut.querySelector(`[value='${timeInValue}']`).selected = 'selected';
 };
 
-export { formTitle, priceArea };
+document.addEventListener('DOMContentLoaded', () => {
+  checkTitleValidity();
+  updatePriceMinValue();
+  checkAddressValidity();
+});
+
+
+export { formTitle, priceInput as priceArea };

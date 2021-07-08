@@ -1,27 +1,13 @@
 import { getOfferTemplate } from './offer-template.js';
 import { setMapMarker } from './map.js';
 import { showAlert} from './utils.js';
-import { closeSuccessAlertMessage, closeServerAlertMessage} from './main.js';
+import { showRequestSuccessMessage, addHideMessageHandlers, showServerErrorMessage} from './messaging.js';
 
-const mainBlock = document.querySelector('.notice');
-
-function showServerErrorAlert(){
-  const errorTemplate = document.querySelector('#error').content;
-  const errorMessage = errorTemplate.cloneNode(true);
-  mainBlock.appendChild(errorMessage);
-}
 
 function showServerSubmitErrorAlert(){
   showAlert('Не удалось получить данные');
 }
 
-function showRequestSuccessMessage() {
-  const successTemplate = document.querySelector('#success').content;
-  const successMessage = successTemplate.cloneNode(true);
-  mainBlock.appendChild(successMessage);
-}
-
-// rename getOffers()
 const offer = fetch('https://23.javascript.pages.academy/keksobooking/data')
   .then((response) =>
     response.ok ? response.json() : showServerSubmitErrorAlert(),
@@ -30,7 +16,6 @@ const offer = fetch('https://23.javascript.pages.academy/keksobooking/data')
     showServerSubmitErrorAlert();
   });
 
-// move to main
 const getValue = async () => {
   const offers = await offer;
   offers.forEach((item) => {
@@ -54,14 +39,14 @@ export function postOffer(offerData, onSuccess){
       if (response.ok) {
         showRequestSuccessMessage();
         onSuccess();
-        closeSuccessAlertMessage();
+        addHideMessageHandlers();
       } else {
-        showServerErrorAlert();
-        closeServerAlertMessage();
+        showServerErrorMessage();
+        addHideMessageHandlers();
       }
     })
     .catch(() => {
-      showServerErrorAlert();
+      showServerErrorMessage();
     });
 }
 

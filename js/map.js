@@ -60,6 +60,7 @@ mainMarker.on('moveend', (evt) => {
     lng: targetLongitude,
   };
   setMarkerCoordinates.value = `lat: ${targetLatitude}, lng: ${targetLongitude}`;
+  setMarkerCoordinates.dispatchEvent(new Event('input'));
 });
 export function setMapMarker(location, offerTemplate) {
   L.marker(location)
