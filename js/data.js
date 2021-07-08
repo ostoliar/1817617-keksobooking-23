@@ -1,6 +1,6 @@
 import { getOfferTemplate } from './offer-template.js';
 import { setMapMarker } from './map.js';
-import { showAlert, showSuccessMessage } from './utils.js';
+import { showAlert} from './utils.js';
 
 function showServerErrorAlert(){
   showAlert('Не удалось отправить форму. Попробуйте ещё раз');
@@ -11,7 +11,10 @@ function showServerSubmitErrorAlert(){
 }
 
 function showRequestSuccessMessage() {
-  showSuccessMessage('Данные отправлены успешно');
+  const successTemplate = document.querySelector('#success').content;
+  const successMessage = successTemplate.cloneNode(true);
+  const mainBlock = document.querySelector('.notice');
+  mainBlock.appendChild(successMessage);
 }
 
 // rename getOffers()

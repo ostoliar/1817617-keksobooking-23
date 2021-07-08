@@ -32,16 +32,6 @@ formTitle.addEventListener('invalid', () => {
 });
 document.addEventListener('DOMContentLoaded', checkTitleValidity);
 
-const priceArea = document.querySelector('#price');
-
-priceArea.addEventListener('input', () => {
-  if (priceArea.value > 1000000) {
-    priceArea.setCustomValidity('Значение должно быть не более 1000000');
-  }
-  if (priceArea.value <= 0) {
-    priceArea.setCustomValidity('Значение должно быть больше 0');
-  }
-});
 
 function getNumericValue(value) {
   return Number.parseInt(value, 10);
@@ -74,21 +64,55 @@ document.addEventListener('DOMContentLoaded', setAvailableCapacityOptions);
 const appartmentType = document.querySelector('#type');
 const appartmentPrice = {
   bungalow: 0,
+  flat: 1000,
   hotel: 3000,
   house: 5000,
   palace: 10000,
 };
+
+const priceArea = document.querySelector('#price');
 
 appartmentType.onchange = function (evt) {
   const selectedAppartmentType = evt.target.value;
   const expectedPrice = appartmentPrice[selectedAppartmentType];
   if (priceArea.value < expectedPrice) {
     priceArea.placeholder = expectedPrice;
-    priceArea.setCustomValidity(
-      `Значение должно быть более или равно ${expectedPrice}`,
-    );
+    priceArea.setCustomValidity(`Значение должно быть более или равно ${expectedPrice}`);
+
   }
 };
+
+// function setExpectedPrice(evt) {
+//   const selectedAppartmentType = evt.target.value;
+//   const expectedPrice = appartmentPrice[selectedAppartmentType];
+//   if (priceArea.value < expectedPrice) {
+//     priceArea.placeholder = expectedPrice;
+//     priceArea.setCustomValidity(`Значение должно быть более или равно ${expectedPrice}`);
+//   }
+// }
+
+// appartmentType.onchange = setExpectedPrice;
+
+
+priceArea.addEventListener('input', () => {
+  if (priceArea.value > 1000000) {
+    priceArea.setCustomValidity('Значение должно быть не более 1000000');
+  }
+  if (priceArea.value < 0) {
+    priceArea.setCustomValidity('Значение должно быть больше 0');
+  }
+});
+
+// function validatePrice () {
+//   if (priceArea.value > 1000000) {
+//     priceArea.setCustomValidity('Значение должно быть не более 1000000');
+//   }
+//   if (priceArea.value < 0) {
+//     priceArea.setCustomValidity('Значение должно быть больше 0');
+//   }
+// }
+
+// priceArea.onchange = validatePrice;
 
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
