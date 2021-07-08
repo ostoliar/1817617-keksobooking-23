@@ -15,10 +15,7 @@ export function getRandomNumber(from, to) {
   const roundedTo = Math.floor(to);
   const number = Math.floor(Math.random() * (roundedTo - roundedFrom + 1)) + roundedFrom;
 
-  return {
-    error: false,
-    data: number,
-  };
+  return number;
 }
 
 export function getRandomCoordinates(from, to, quantityAfterDecimal) {

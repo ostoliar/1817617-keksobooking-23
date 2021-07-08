@@ -42,7 +42,7 @@ function setDescription(newTemplate, description) {
 }
 function setAvatar(newTemplate, avatar) {
   const templateAvatar = newTemplate.querySelector('.popup__avatar');
-  templateAvatar.src = `${avatar + 0 + getRandomNumber(1, 9)}.png`;
+  templateAvatar.src = `${avatar + 0 + getRandomNumber(1,9)}.png`;
 }
 
 function setFeatures(newTemplate, features) {
