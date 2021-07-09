@@ -18,7 +18,7 @@ const offer = fetch('https://23.javascript.pages.academy/keksobooking/data')
 
 const getValue = async () => {
   const offers = await offer;
-  offers.forEach((item) => {
+  offers.slice(0,10).forEach((item) => {
 
     const offerTemplate = getOfferTemplate(item.offer);
     setMapMarker(item.location, offerTemplate);
