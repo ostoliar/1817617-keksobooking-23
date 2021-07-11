@@ -1,16 +1,24 @@
+const alertSyles = {
+  zIndex: 100,
+  position: 'absolute',
+  left: 0,
+  top: '700px',
+  right: 0,
+  padding: '100px 3px',
+  fontSize: '30px',
+  textAlign: 'center',
+  backgroundColor : '#ffaa99',
+};
+
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
 
 export function showAlert(message) {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 100;
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.left = 0;
-  alertContainer.style.top = '700px';
-  alertContainer.style.right = 0;
-  alertContainer.style.padding = '100px 3px';
-  alertContainer.style.fontSize = '30px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = '#ffaa99';
+
+  for (const [key, value] of Object.entries(alertSyles)) {
+    alertContainer.style[key] = value;
+  }
   alertContainer.textContent = message;
   document.body.append(alertContainer);
 

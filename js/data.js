@@ -8,7 +8,7 @@ function showServerSubmitErrorAlert(){
   showAlert('Не удалось получить данные');
 }
 
-const offer = fetch('https://23.javascript.pages.academy/keksobooking/data')
+const offer = fetch('https://23.jaascript.pages.academy/keksobooking/data')
   .then((response) =>
     response.ok ? response.json() : showServerSubmitErrorAlert(),
   )
@@ -16,14 +16,14 @@ const offer = fetch('https://23.javascript.pages.academy/keksobooking/data')
     showServerSubmitErrorAlert();
   });
 
-const getValue = async () => {
+async function getValue() {
   const offers = await offer;
-  offers.slice(0,10).forEach((item) => {
+  offers.forEach((item) => {
 
     const offerTemplate = getOfferTemplate(item.offer);
     setMapMarker(item.location, offerTemplate);
   });
-};
+}
 
 getValue();
 
