@@ -2,7 +2,7 @@ import { form } from './form.js';
 
 const webToken =
   'pk.eyJ1IjoiZXJ0ZWthIiwiYSI6ImNrcHgydmJrMjEyaDYybm56OHkzZWg4cjEifQ.DtvAiyAnZ6L54Jt7OCE7Dg';
-const latitude = 35.6895;
+const latitude = 35.6795;
 const longitude = 139.69171;
 
 // L - its var of leaflet library
@@ -60,21 +60,26 @@ mainMarker.on('moveend', (evt) => {
     lng: targetLongitude,
   };
   setMarkerCoordinates.value = `lat: ${targetLatitude}, lng: ${targetLongitude}`;
+  setMarkerCoordinates.dispatchEvent(new Event('input'));
 });
+export function setMapMarker(location, offerTemplate) {
+  L.marker(location)
+    .addTo(myMap)
+    .bindPopup(offerTemplate);
+}
 
-export function setMapMarkers(offerTemplate) {
+export function setSubmittedMapMarker(offerTemplate) {
+  if (coordinates) {
+    setMapMarker(coordinates, offerTemplate);
+  }
+}
+
+export function resetMainMarker() {
   mainMarker.setLatLng({
     lat: latitude,
     lng: longitude,
   });
-  if (coordinates) {
-    L.marker({
-      lat: coordinates.lat,
-      lng: coordinates.lng,
-    })
-      .addTo(myMap)
-      .bindPopup(offerTemplate);
-  }
 }
+
 
 export { myMap, tileLayer };

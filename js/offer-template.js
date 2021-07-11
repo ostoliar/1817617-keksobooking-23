@@ -1,5 +1,5 @@
 import { getRandomNumber } from './random-number.js';
-import { author, offer } from './create-offer.js';
+import { author } from './create-offer.js';
 
 const template = document.querySelector('#card').content;
 
@@ -18,19 +18,19 @@ function setAddress(newTemplate, address) {
   templateAddress.textContent = address;
 }
 
-function setApartmentType(newTemplate, appartmentType) {
+function setApartmentType(newTemplate, type) {
   const templateTypeOfApartment = newTemplate.querySelector('.popup__type');
-  templateTypeOfApartment.textContent = appartmentType;
+  templateTypeOfApartment.textContent = type;
 }
 
-function setTimeArrival(newTemplate, timeIn, timeOut) {
+function setTimeArrival(newTemplate, checkin, checkout) {
   const templateTimeArea = newTemplate.querySelector('.popup__text--time');
-  templateTimeArea.textContent = `Заезд  ${timeIn},  ${timeOut}`;
+  templateTimeArea.textContent = `Заезд  ${checkin},  ${checkout}`;
 }
 
-function setCapacity(newTemplate, roomNumber, capacity) {
+function setCapacity(newTemplate, rooms, guests) {
   const templateCapacity = newTemplate.querySelector('.popup__text--capacity');
-  templateCapacity.textContent = `${roomNumber}  ${capacity}`;
+  templateCapacity.textContent = `${rooms}  ${guests}`;
 }
 
 function setDescription(newTemplate, description) {
@@ -42,11 +42,11 @@ function setDescription(newTemplate, description) {
 }
 function setAvatar(newTemplate, avatar) {
   const templateAvatar = newTemplate.querySelector('.popup__avatar');
-  templateAvatar.src = `${avatar + 0 + getRandomNumber(1, 9).result}.png`;
+  templateAvatar.src = `${avatar + 0 + getRandomNumber(1,9)}.png`;
 }
 
-function setFeatures(newTemplate, selectedFeatures) {
-  selectedFeatures.forEach((selectedFeature) => {
+function setFeatures(newTemplate, features) {
+  features.forEach((selectedFeature) => {
     const elem = newTemplate.querySelector(
       `.popup__feature--${selectedFeature}`,
     );
@@ -66,19 +66,23 @@ function setPhotos(newTemplate, photos) {
   }
 }
 
-export function getOfferTemplate(formData) {
+export function getOfferTemplate(offer) {
   const newItemTemplate = template.querySelector('.popup');
   const newTemplate = newItemTemplate.cloneNode(true);
+  if (offer.features) {
+    setFeatures(newTemplate, offer.features);
+  }
+  if (offer.photos) {
+    setPhotos(newTemplate, offer.photos);
+  }
 
-  setFeatures(newTemplate, formData.selectedFeatures);
-  setPhotos(newTemplate, offer.photos);
-  setTitle(newTemplate, formData.title);
-  setAddress(newTemplate, formData.address);
-  setPrice(newTemplate, formData.price);
-  setApartmentType(newTemplate, formData.appartmentType);
-  setTimeArrival(newTemplate, formData.timeIn, formData.timeOut);
-  setCapacity(newTemplate, formData.roomNumber, formData.capacity);
-  setDescription(newTemplate, formData.description);
+  setTitle(newTemplate, offer.title);
+  setAddress(newTemplate, offer.address);
+  setPrice(newTemplate, offer.price);
+  setApartmentType(newTemplate, offer.type);
+  setTimeArrival(newTemplate, offer.checkin, offer.checkout);
+  setCapacity(newTemplate, offer.rooms, offer.guests);
+  setDescription(newTemplate, offer.description);
   setAvatar(newTemplate, author.avatar);
   return newTemplate;
 }
