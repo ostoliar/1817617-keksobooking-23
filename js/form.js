@@ -29,9 +29,26 @@ function getFormData(dataForm) {
   };
 }
 
+function cleanCheckBoxes() {
+  const checkboxes = document.querySelectorAll('.features__checkbox');
+  for (let item = 0; item < checkboxes.length; item++) {
+    checkboxes[item].checked = false;
+  }
+}
+
+
 function cleanupForm(dataForm) {
   dataForm.querySelector('#title').value = '';
   dataForm.querySelector('#address').value = '';
+  dataForm.querySelector('#description').value = '';
+  dataForm.querySelector('#price').placeholder = 1000;
+  dataForm.querySelector('#price').value = '';
+  document.querySelector('#type').selectedIndex = 1;
+  document.querySelector('#room_number').selectedIndex = 0;
+  document.querySelector('#capacity').selectedIndex = 2;
+  document.querySelector('#timein').selectedIndex = 0;
+  document.querySelector('#timeout').selectedIndex = 0;
+  cleanCheckBoxes();
 }
 
 
