@@ -1,31 +1,24 @@
-import { getOfferTemplate } from './offer-template.js';
-import { setMapMarker } from './map.js';
 import { showAlert} from './utils.js';
 import { showRequestSuccessMessage, addHideMessageHandlers, showServerErrorMessage} from './messaging.js';
-
 
 function showServerSubmitErrorAlert(){
   showAlert('Не удалось получить данные');
 }
 
-const offer = fetch('https://23.javascript.pages.academy/keksobooking/data')
-  .then((response) =>
-    response.ok ? response.json() : showServerSubmitErrorAlert(),
-  )
-  .catch(() => {
-    showServerSubmitErrorAlert();
-  });
+export async function getOffers(){
+  return fetch('https://23.javascript.pages.academy/keksobooking/data')
+    .then((response) =>{
+      if(!response.ok){
+        throw new Error('Failed to load data');
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      showServerSubmitErrorAlert();
+      throw error;
+    });
+}
 
-const getValue = async () => {
-  const offers = await offer;
-  offers.forEach((item) => {
-
-    const offerTemplate = getOfferTemplate(item.offer);
-    setMapMarker(item.location, offerTemplate);
-  });
-};
-
-getValue();
 
 export function postOffer(offerData, onSuccess){
   fetch(
@@ -36,19 +29,17 @@ export function postOffer(offerData, onSuccess){
     },
   )
     .then((response) => {
-      if (response.ok) {
-        showRequestSuccessMessage();
-        onSuccess();
-        addHideMessageHandlers();
-      } else {
-        showServerErrorMessage();
-        addHideMessageHandlers();
+      if(!response.ok){
+        throw new Error('Failed to load data');
       }
+      showRequestSuccessMessage();
+      onSuccess();
+      addHideMessageHandlers();
     })
-    .catch(() => {
+    .catch((error) => {
       showServerErrorMessage();
+      addHideMessageHandlers();
+      throw error;
     });
 }
 
-
-export {offer, showAlert};
