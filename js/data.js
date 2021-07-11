@@ -35,15 +35,6 @@ export function postOffer(offerData, onSuccess){
       showRequestSuccessMessage();
       onSuccess();
       addHideMessageHandlers();
-
-      // if (response.ok) {
-      //   showRequestSuccessMessage();
-      //   onSuccess();
-      //   addHideMessageHandlers();
-      // } else {
-      //   showServerErrorMessage();
-      //   addHideMessageHandlers();
-      // }
     })
     .catch((error) => {
       showServerErrorMessage();
