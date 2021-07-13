@@ -2,6 +2,7 @@ import {
   roomNumber as roomNumberElement,
   capacity as capacityElement
 } from './form.js';
+import {getNumericValue} from './utils.js';
 
 const addressCoordinates = document.querySelector('#address');
 
@@ -48,9 +49,6 @@ formTitle.addEventListener('invalid', () => {
   formTitle.addEventListener('input', reportTitleValidity);
 });
 
-function getNumericValue(value) {
-  return Number.parseInt(value, 10);
-}
 
 function setElementDisabled(element, isDisabled) {
   if (isDisabled) {

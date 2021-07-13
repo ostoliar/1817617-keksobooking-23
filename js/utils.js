@@ -1,3 +1,7 @@
+export function getNumericValue(value) {
+  return Number.parseInt(value, 10);
+}
+
 const alertSyles = {
   zIndex: 100,
   position: 'absolute',

@@ -11,7 +11,9 @@ function showMessage(elementSelector){
 function hideMessage(elementSelector){
   const message = document.querySelector(elementSelector);
   message.classList.add('hidden');
+
 }
+
 
 export function addHideMessageHandlers(elementSelector){
   document.addEventListener('keydown', ()=> {

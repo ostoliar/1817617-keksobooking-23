@@ -30,6 +30,8 @@ fileChooserApartmentPhotos.addEventListener('change', () => {
   img.style.height = '70px';
   img.style.marginRight = '10px';
   previewApartmentPhotos.appendChild(img);
+  previewApartmentPhotos.style.backgroundColor = '#f0f0ea';
+  previewApartmentPhotos.style.width = '100%';
   const file = fileChooserApartmentPhotos.files[0];
   const fileName = file.name.toLowerCase();
 

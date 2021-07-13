@@ -526,8 +526,6 @@ fieldset {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
 }
 
 .ad-form__upload {
@@ -583,7 +581,6 @@ fieldset {
 
   background-color: #e4e4de;
   border-radius: 5px;
-  display: flex;
 }
 
 .ad-form__element--submit {

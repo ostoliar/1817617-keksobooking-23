@@ -4,6 +4,7 @@ const webToken =
   'pk.eyJ1IjoiZXJ0ZWthIiwiYSI6ImNrcHgydmJrMjEyaDYybm56OHkzZWg4cjEifQ.DtvAiyAnZ6L54Jt7OCE7Dg';
 const latitude = 35.6795;
 const longitude = 139.69171;
+const markers = [];
 
 // L - its var of leaflet library
 const myMap = L.map('mapId').setView([latitude, longitude], 13);
@@ -62,10 +63,12 @@ mainMarker.on('moveend', (evt) => {
   setMarkerCoordinates.value = `lat: ${targetLatitude}, lng: ${targetLongitude}`;
   setMarkerCoordinates.dispatchEvent(new Event('input'));
 });
+
 export function setMapMarker(location, offerTemplate) {
-  L.marker(location)
+  const marker = L.marker(location)
     .addTo(myMap)
     .bindPopup(offerTemplate);
+  markers.push(marker);
 }
 
 export function setSubmittedMapMarker(offerTemplate) {
@@ -78,6 +81,12 @@ export function resetMainMarker() {
   mainMarker.setLatLng({
     lat: latitude,
     lng: longitude,
+  });
+}
+
+export function resetAllMarkers() {
+  markers.forEach((item) => {
+    myMap.removeLayer(item);
   });
 }
 
