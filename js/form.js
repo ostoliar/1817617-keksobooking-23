@@ -8,19 +8,24 @@ const roomNumberElement = form.querySelector('#room_number');
 const capacityElement = form.querySelector('#capacity');
 const timeInElement = form.querySelector('#timein');
 const timeOutElement = form.querySelector('#timeout');
+const appartmentTypeElement = form.querySelector('#type');
+const titleElement = form.querySelector('#title');
+const priceElement = form.querySelector('#price');
+const addressElement = form.querySelector('#address');
+const descriptionElement = form.querySelector('#description');
+const avatarPhoto = document.querySelector('#avatar-image');
 
-function getFormData(dataForm) {
-  const appartmentTypeElement = form.querySelector('#type');
+function getFormData() {
   return {
-    title: dataForm.querySelector('#title').value,
-    price: dataForm.querySelector('#price').value,
+    title: titleElement.value,
+    price: priceElement.value,
     features: [
-      ...dataForm.querySelectorAll('.features input:checked'),
+      ...form.querySelectorAll('.features input:checked'),
     ].map((element) => element.value),
-    address: dataForm.querySelector('#address').value,
+    address: addressElement.value,
     type:
       appartmentTypeElement.options[appartmentTypeElement.selectedIndex].text,
-    description: form.querySelector('#description').value,
+    description: descriptionElement.value,
     rooms: roomNumberElement.options[roomNumberElement.selectedIndex].text,
     guests: capacityElement.options[capacityElement.selectedIndex].text,
     checkin: timeInElement.options[timeInElement.selectedIndex].text,
@@ -36,32 +41,35 @@ function cleanCheckBoxes() {
   }
 }
 
-
-function cleanupForm(dataForm) {
-  dataForm.querySelector('#title').value = '';
-  dataForm.querySelector('#address').value = '';
-  dataForm.querySelector('#description').value = '';
-  dataForm.querySelector('#price').placeholder = 1000;
-  dataForm.querySelector('#price').value = '';
-  document.querySelector('#type').selectedIndex = 1;
-  document.querySelector('#room_number').selectedIndex = 0;
-  document.querySelector('#capacity').selectedIndex = 2;
-  document.querySelector('#timein').selectedIndex = 0;
-  document.querySelector('#timeout').selectedIndex = 0;
+function cleanupForm() {
+  titleElement.value = '';
+  addressElement.value = '';
+  descriptionElement.value = '';
+  appartmentTypeElement.selectedIndex = 1;
+  appartmentTypeElement.dispatchEvent(new Event('change'));
+  priceElement.value = '';
+  roomNumberElement.selectedIndex = 0;
+  capacityElement.selectedIndex = 2;
+  timeInElement.selectedIndex = 0;
+  timeOutElement.selectedIndex = 0;
+  avatarPhoto.src = 'img/muffin-grey.svg';
+  document.querySelectorAll('.user-photo').forEach((item)=>{
+    item.parentNode.removeChild(item);
+  });
   cleanCheckBoxes();
 }
 
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const formData = getFormData(form);
+  const formData = getFormData();
   const offerTemplate = getOfferTemplate(formData);
   setSubmittedMapMarker(offerTemplate);
   const offerData = new FormData(form);
 
   postOffer(offerData, () => {
     resetMainMarker();
-    cleanupForm(form);
+    cleanupForm();
   });
 });
 

@@ -2,6 +2,9 @@
 
 const fileChooserAvatar = document.querySelector('.ad-form__field input[type=file]');
 const previewAvatar = document.querySelector('#avatar-image');
+const fileChooserApartmentPhotos = document.querySelector('.ad-form__upload input[type=file]');
+const previewApartmentPhotos = document.querySelector('.ad-form__photo');
+
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 function loadImage(fileChooseElement, imageElement) {
@@ -21,23 +24,26 @@ function loadImage(fileChooseElement, imageElement) {
   }
 }
 
-fileChooserAvatar.addEventListener('change', () => {
-  loadImage(fileChooserAvatar, previewAvatar);
-});
-
-const fileChooserApartmentPhotos = document.querySelector('.ad-form__upload input[type=file]');
-const previewApartmentPhotos = document.querySelector('.ad-form__photo');
-
-fileChooserApartmentPhotos.addEventListener('change', () => {
+function createImageElement(){
   const img = document.createElement('img');
+  img.classList.add('user-photo');
   img.style.width = '70px';
   img.style.height = '70px';
   img.style.marginRight = '10px';
   previewApartmentPhotos.appendChild(img);
   previewApartmentPhotos.style.backgroundColor = '#f0f0ea';
   previewApartmentPhotos.style.width = '100%';
+  return img;
+}
 
-  loadImage(fileChooserApartmentPhotos, img);
-});
+export function initialize() {
+  fileChooserAvatar.addEventListener('change', () => {
+    loadImage(fileChooserAvatar, previewAvatar);
+  });
+  fileChooserApartmentPhotos.addEventListener('change', () => {
+    const img = createImageElement();
+    loadImage(fileChooserApartmentPhotos, img);
+  });
+}
 
-export {fileChooserAvatar as fileChooser, previewAvatar as preview, FILE_TYPES, fileChooserApartmentPhotos, previewApartmentPhotos};
+

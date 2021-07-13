@@ -12,7 +12,9 @@ function showMessage(elementSelector){
 function hideMessage(elementSelector){
   const message = document.querySelector(elementSelector);
   message.classList.add('hidden');
+  message.parentNode.removeChild(message);
   handlers.forEach((item) => document.removeEventListener(item.name, item.handler));
+  handlers.length = 0;
 }
 
 export function addHideMessageHandlers(elementSelector){

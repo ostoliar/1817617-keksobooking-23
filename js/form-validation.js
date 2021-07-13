@@ -5,6 +5,19 @@ import {
 import {getNumericValue} from './utils.js';
 
 const addressCoordinates = document.querySelector('#address');
+const timeIn = document.querySelector('#timein');
+const timeOut = document.querySelector('#timeout');
+const formTitle = document.querySelector('#title');
+const priceInput = document.querySelector('#price');
+const appartmentType = document.querySelector('#type');
+
+const appartmentPrice = {
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000,
+};
 
 function checkAddressValidity(){
   if (addressCoordinates.validity.valueMissing) {
@@ -18,10 +31,6 @@ function reportAddressValidity() {
   checkAddressValidity();
   addressCoordinates.reportValidity();
 }
-
-addressCoordinates.addEventListener('input', reportAddressValidity);
-
-const formTitle = document.querySelector('#title');
 
 function checkTitleValidity() {
   if (formTitle.validity.tooShort) {
@@ -44,12 +53,6 @@ function reportTitleValidity() {
   formTitle.reportValidity();
 }
 
-formTitle.addEventListener('blur', reportTitleValidity);
-formTitle.addEventListener('invalid', () => {
-  formTitle.addEventListener('input', reportTitleValidity);
-});
-
-
 function setElementDisabled(element, isDisabled) {
   if (isDisabled) {
     element.setAttribute('disabled', true);
@@ -71,20 +74,6 @@ function setAvailableCapacityOptions() {
   capacityElement.querySelector('option:not([disabled])').selected = true;
 }
 
-roomNumberElement.onchange = setAvailableCapacityOptions;
-document.addEventListener('DOMContentLoaded', setAvailableCapacityOptions);
-
-const appartmentType = document.querySelector('#type');
-const appartmentPrice = {
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  house: 5000,
-  palace: 10000,
-};
-
-const priceInput = document.querySelector('#price');
-
 function reportPriceValidity(){
   if (priceInput.validity.rangeUnderflow) {
     priceInput.setCustomValidity(`Значение должно быть более или равно ${priceInput.min}`);
@@ -101,33 +90,35 @@ function reportPriceValidity(){
   priceInput.reportValidity();
 }
 
-
 function updatePriceMinValue(){
   const selectedAppartmentType = appartmentType.value;
   const minPrice = appartmentPrice[selectedAppartmentType];
   priceInput.min = minPrice;
   priceInput.placeholder = minPrice;
 }
-appartmentType.onchange = updatePriceMinValue;
-priceInput.addEventListener('blur', reportPriceValidity);
-priceInput.addEventListener('invalid', () => {
-  priceInput.addEventListener('input', reportPriceValidity);
-});
 
-
-const timeIn = document.querySelector('#timein');
-const timeOut = document.querySelector('#timeout');
-
-timeIn.onchange = function (evt) {
-  const timeInValue = evt.target.value;
-  timeOut.querySelector(`[value='${timeInValue}']`).selected = 'selected';
-};
-
-document.addEventListener('DOMContentLoaded', () => {
+export function intialize(){
   checkTitleValidity();
   updatePriceMinValue();
   checkAddressValidity();
-});
+  setAvailableCapacityOptions();
 
+  roomNumberElement.onchange = setAvailableCapacityOptions;
+  addressCoordinates.addEventListener('input', reportAddressValidity);
+  formTitle.addEventListener('blur', reportTitleValidity);
+  formTitle.addEventListener('invalid', () => {
+    formTitle.addEventListener('input', reportTitleValidity);
+  });
 
-export { formTitle, priceInput as priceArea };
+  appartmentType.onchange = updatePriceMinValue;
+  priceInput.addEventListener('blur', reportPriceValidity);
+  priceInput.addEventListener('invalid', () => {
+    priceInput.addEventListener('input', reportPriceValidity);
+  });
+
+  timeIn.onchange = function (evt) {
+    const timeInValue = evt.target.value;
+    timeOut.querySelector(`[value='${timeInValue}']`).selected = 'selected';
+  };
+}
+

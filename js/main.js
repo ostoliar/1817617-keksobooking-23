@@ -1,23 +1,12 @@
-import { similarOffer} from './create-offer.js';
 import {getOfferTemplate} from './offer-template.js';
 import {setMapMarker} from './map.js';
-import {priceArea, formTitle} from './form-validation.js';
+import {intialize as intializeFormValidation} from './form-validation.js';
 import { getOffers } from './data.js';
-import {FILE_TYPES, fileChooser, preview, previewApartmentPhotos, fileChooserApartmentPhotos} from './load-photos.js';
-import {ANY_VALUE, initialize} from './filter.js';
+import {initialize as initializeLoadPhoto} from './load-photos.js';
+import {ANY_VALUE, initialize as initializeFilter} from './filter.js';
 import {resetAllMarkers} from './map.js';
 import {getNumericValue} from './utils.js';
 import {priceOptions} from './filter.js';
-
-similarOffer;
-priceArea;
-formTitle;
-preview;
-fileChooser;
-FILE_TYPES;
-fileChooserApartmentPhotos;
-previewApartmentPhotos;
-
 
 function filterOffer(offer, filterData) {
   if(filterData.type !== ANY_VALUE && filterData.type !== offer.type) {
@@ -40,10 +29,9 @@ function filterOffer(offer, filterData) {
   return true;
 }
 
-
 async function loadOffers() {
   const offers = await getOffers();
-  initialize((filterData) => {
+  initializeFilter((filterData) => {
     resetAllMarkers();
     offers
       .filter((item) => filterOffer(item.offer, filterData))
@@ -55,6 +43,8 @@ async function loadOffers() {
   });
 }
 
+intializeFormValidation();
+initializeLoadPhoto();
 loadOffers();
 
 
