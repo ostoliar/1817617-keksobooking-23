@@ -8,7 +8,7 @@ const featureInputElements = filterForm.querySelectorAll('input.map__checkbox');
 const priceElement = filterForm.querySelector('#housing-price');
 
 export const ANY_VALUE = 'any';
-export const priceOptions = {
+export const PriceOptions = {
   low: {from: 0, to: 10000},
   middle: {from: 10000, to: 50000},
   high: {from: 50000, to: Infinity},

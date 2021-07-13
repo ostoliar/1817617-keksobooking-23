@@ -6,7 +6,7 @@ import {initialize as initializeLoadPhoto} from './load-photos.js';
 import {ANY_VALUE, initialize as initializeFilter} from './filter.js';
 import {resetAllMarkers} from './map.js';
 import {getNumericValue} from './utils.js';
-import {priceOptions} from './filter.js';
+import {PriceOptions} from './filter.js';
 
 function filterOffer(offer, filterData) {
   if(filterData.type !== ANY_VALUE && filterData.type !== offer.type) {
@@ -22,7 +22,7 @@ function filterOffer(offer, filterData) {
   if(!filterData.features.every((item) => offerFeatures.includes(item))){
     return false;
   }
-  const priceRange = priceOptions[filterData.price];
+  const priceRange = PriceOptions[filterData.price];
   if(filterData.price !== ANY_VALUE &&  (offer.price < priceRange.from ||  offer.price > priceRange.to)) {
     return false;
   }
