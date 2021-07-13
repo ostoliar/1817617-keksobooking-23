@@ -7,6 +7,7 @@ import {FILE_TYPES, fileChooser, preview, previewApartmentPhotos, fileChooserApa
 import {ANY_VALUE, initialize} from './filter.js';
 import {resetAllMarkers} from './map.js';
 import {getNumericValue} from './utils.js';
+import {priceOptions} from './filter.js';
 
 similarOffer;
 priceArea;
@@ -16,6 +17,7 @@ fileChooser;
 FILE_TYPES;
 fileChooserApartmentPhotos;
 previewApartmentPhotos;
+
 
 function filterOffer(offer, filterData) {
   if(filterData.type !== ANY_VALUE && filterData.type !== offer.type) {
@@ -31,6 +33,10 @@ function filterOffer(offer, filterData) {
   if(!filterData.features.every((item) => offerFeatures.includes(item))){
     return false;
   }
+  const priceRange = priceOptions[filterData.price];
+  if(filterData.price !== ANY_VALUE &&  (offer.price < priceRange.from ||  offer.price > priceRange.to)) {
+    return false;
+  }
   return true;
 }
 
@@ -38,7 +44,9 @@ async function loadOffers() {
   const offers = await getOffers();
   initialize((filterData) => {
     resetAllMarkers();
-    offers.filter((item) => filterOffer(item.offer, filterData))
+    offers
+      .filter((item) => filterOffer(item.offer, filterData))
+      .slice(0,10)
       .forEach((item) => {
         const offerTemplate = getOfferTemplate(item.offer);
         setMapMarker(item.location, offerTemplate);
