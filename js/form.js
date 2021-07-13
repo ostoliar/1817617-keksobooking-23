@@ -34,11 +34,25 @@ function getFormData() {
   };
 }
 
-function cleanCheckBoxes() {
-  const checkboxes = document.querySelectorAll('.features__checkbox');
-  for (let item = 0; item < checkboxes.length; item++) {
-    checkboxes[item].checked = false;
+function cleanCheckBoxes(items) {
+  for (let item = 0; item < items.length; item++) {
+    items[item].checked = false;
   }
+}
+
+function cleanupFilterForm() {
+  const housingType = document.querySelector('#housing-type');
+  const housingPrice = document.querySelector('#housing-price');
+  const housingRooms = document.querySelector('#housing-rooms');
+  const housingGuests = document.querySelector('#housing-guests');
+  const housingFeatures = document.querySelectorAll('.map__checkbox');
+  housingType.selectedIndex = 0;
+  housingPrice.selectedIndex = 0;
+  housingRooms.selectedIndex = 0;
+  housingGuests.selectedIndex = 0;
+  cleanCheckBoxes(housingFeatures);
+
+
 }
 
 function cleanupForm() {
@@ -56,7 +70,8 @@ function cleanupForm() {
   document.querySelectorAll('.user-photo').forEach((item)=>{
     item.parentNode.removeChild(item);
   });
-  cleanCheckBoxes();
+  const featuresCheckboxes = document.querySelectorAll('.features__checkbox');
+  cleanCheckBoxes(featuresCheckboxes);
 }
 
 
@@ -70,6 +85,7 @@ form.addEventListener('submit', (evt) => {
   postOffer(offerData, () => {
     resetMainMarker();
     cleanupForm();
+    cleanupFilterForm();
   });
 });
 
