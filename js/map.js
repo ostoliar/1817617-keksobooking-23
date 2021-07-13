@@ -89,6 +89,3 @@ export function resetAllMarkers() {
     myMap.removeLayer(item);
   });
 }
-
-
-export { myMap, tileLayer };

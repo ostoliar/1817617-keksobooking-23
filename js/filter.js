@@ -3,12 +3,15 @@ const filterForm = document.querySelector('.map__filters');
 const appartmentTypeElement = filterForm.querySelector('#housing-type');
 const roomNumberElement = filterForm.querySelector('#housing-rooms');
 const capacityElement = filterForm.querySelector('#housing-guests');
+const featureInputElements = filterForm.querySelectorAll('input.map__checkbox');
+
+export const ANY_VALUE = 'any';
 
 function getFilterData() {
   return {
     price: filterForm.querySelector('#housing-price').value,
     features: [
-      ...filterForm.querySelectorAll('.map__feature input:checked'),
+      ...filterForm.querySelectorAll('input.map__checkbox:checked'),
     ].map((element) => element.value),
     type:
           appartmentTypeElement.options[appartmentTypeElement.selectedIndex].value,
@@ -17,19 +20,12 @@ function getFilterData() {
   };
 }
 
-
 export function initialize(filterChanged) {
-  const filterData = getFilterData();
-  filterChanged(filterData);
-  appartmentTypeElement.onchange = ()=> {
-    filterChanged(getFilterData());
-  };
-  roomNumberElement.onchange = ()=> {
-    filterChanged(getFilterData());
-  };
-  capacityElement.onchange = ()=> {
-    filterChanged(getFilterData());
-  };
+  filterChanged(getFilterData());
+  const changeElements = [appartmentTypeElement, roomNumberElement, capacityElement, ...featureInputElements];
+  changeElements.forEach((item) => {
+    item.onchange = () => filterChanged(getFilterData());
+  });
 }
 
 

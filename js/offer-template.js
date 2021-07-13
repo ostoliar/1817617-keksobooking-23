@@ -86,5 +86,3 @@ export function getOfferTemplate(offer) {
   setAvatar(newTemplate, author.avatar);
   return newTemplate;
 }
-
-export { template };
