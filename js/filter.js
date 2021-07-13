@@ -25,11 +25,23 @@ function getFilterData() {
   };
 }
 
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+
+  };
+}
+
+
 export function initialize(filterChanged) {
   filterChanged(getFilterData());
   const changeElements = [appartmentTypeElement, roomNumberElement, capacityElement, ...featureInputElements, priceElement];
   changeElements.forEach((item) => {
-    item.onchange = _.debounce(() => filterChanged(getFilterData()), 500);
+    item.onchange = debounce(() => filterChanged(getFilterData()), 500);
   });
 }
 
