@@ -1,4 +1,3 @@
-
 const filterForm = document.querySelector('.map__filters');
 const appartmentTypeElement = filterForm.querySelector('#housing-type');
 const roomNumberElement = filterForm.querySelector('#housing-rooms');
@@ -30,7 +29,7 @@ export function initialize(filterChanged) {
   filterChanged(getFilterData());
   const changeElements = [appartmentTypeElement, roomNumberElement, capacityElement, ...featureInputElements, priceElement];
   changeElements.forEach((item) => {
-    item.onchange = () => filterChanged(getFilterData());
+    item.onchange = _.debounce(() => filterChanged(getFilterData()), 500);
   });
 }
 

@@ -40,6 +40,7 @@ function filterOffer(offer, filterData) {
   return true;
 }
 
+
 async function loadOffers() {
   const offers = await getOffers();
   initialize((filterData) => {

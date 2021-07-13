@@ -1,6 +1,7 @@
 import { isEscEvent } from './utils.js';
 
 const mainBlock = document.querySelector('.notice');
+const handlers = [];
 
 function showMessage(elementSelector){
   const temlate = document.querySelector(elementSelector).content;
@@ -11,19 +12,19 @@ function showMessage(elementSelector){
 function hideMessage(elementSelector){
   const message = document.querySelector(elementSelector);
   message.classList.add('hidden');
-
+  handlers.forEach((item) => document.removeEventListener(item.name, item.handler));
 }
 
-
 export function addHideMessageHandlers(elementSelector){
-  document.addEventListener('keydown', ()=> {
+  handlers.push({name: 'keydown', handler: ()=> {
     if(isEscEvent){
       hideMessage(elementSelector);
     }
-  });
-  document.addEventListener('click', ()=> {
+  }});
+  handlers.push({name: 'click', handler: ()=> {
     hideMessage(elementSelector);
-  });
+  }});
+  handlers.forEach((item) => document.addEventListener(item.name, item.handler));
 }
 
 export function showServerErrorMessage(){
