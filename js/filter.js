@@ -1,3 +1,5 @@
+import { debounce } from './utils/debounce.js';
+
 const filterForm = document.querySelector('.map__filters');
 const appartmentTypeElement = filterForm.querySelector('#housing-type');
 const roomNumberElement = filterForm.querySelector('#housing-rooms');
@@ -24,18 +26,6 @@ function getFilterData() {
     guests: capacityElement.options[capacityElement.selectedIndex].value,
   };
 }
-
-function debounce (callback, timeoutDelay = 500) {
-  let timeoutId;
-
-  return (...rest) => {
-    clearTimeout(timeoutId);
-
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-
-  };
-}
-
 
 export function initialize(filterChanged) {
   filterChanged(getFilterData());
