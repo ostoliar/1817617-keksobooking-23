@@ -3,7 +3,7 @@ import {getOfferTemplate} from './offer-template.js';
 import {setMapMarker} from './map.js';
 import {priceArea, formTitle} from './form-validation.js';
 import { getOffers } from './data.js';
-import {FILE_TYPES, fileChooser, preview, previewApartmentPhotos, fileChooserApartmentPhotos} from './avatar.js';
+import {FILE_TYPES, fileChooser, preview, previewApartmentPhotos, fileChooserApartmentPhotos} from './load-photos.js';
 import {ANY_VALUE, initialize} from './filter.js';
 import {resetAllMarkers} from './map.js';
 import {getNumericValue} from './utils.js';

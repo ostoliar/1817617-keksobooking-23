@@ -4,8 +4,8 @@ const fileChooserAvatar = document.querySelector('.ad-form__field input[type=fil
 const previewAvatar = document.querySelector('#avatar-image');
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-fileChooserAvatar.addEventListener('change', () => {
-  const file = fileChooserAvatar.files[0];
+function loadImage(fileChooseElement, imageElement) {
+  const file = fileChooseElement.files[0];
   const fileName = file.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
@@ -14,11 +14,15 @@ fileChooserAvatar.addEventListener('change', () => {
     const reader = new FileReader();
 
     reader.addEventListener('load', () => {
-      previewAvatar.src = reader.result;
+      imageElement.src = reader.result;
     });
 
     reader.readAsDataURL(file);
   }
+}
+
+fileChooserAvatar.addEventListener('change', () => {
+  loadImage(fileChooserAvatar, previewAvatar);
 });
 
 const fileChooserApartmentPhotos = document.querySelector('.ad-form__upload input[type=file]');
@@ -32,20 +36,8 @@ fileChooserApartmentPhotos.addEventListener('change', () => {
   previewApartmentPhotos.appendChild(img);
   previewApartmentPhotos.style.backgroundColor = '#f0f0ea';
   previewApartmentPhotos.style.width = '100%';
-  const file = fileChooserApartmentPhotos.files[0];
-  const fileName = file.name.toLowerCase();
 
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-
-  if (matches) {
-    const reader = new FileReader();
-
-    reader.addEventListener('load', () => {
-      img.src = reader.result;
-    });
-
-    reader.readAsDataURL(file);
-  }
+  loadImage(fileChooserApartmentPhotos, img);
 });
 
 export {fileChooserAvatar as fileChooser, previewAvatar as preview, FILE_TYPES, fileChooserApartmentPhotos, previewApartmentPhotos};
