@@ -24,7 +24,7 @@ function loadImage(fileChooseElement, imageElement) {
   }
 }
 
-function createImageElement(){
+function createImageElement() {
   const img = document.createElement('img');
   img.classList.add('user-photo');
   img.style.width = '70px';

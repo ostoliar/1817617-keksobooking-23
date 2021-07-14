@@ -1,14 +1,26 @@
-import { showAlert} from './utils.js';
-import { showRequestSuccessMessage, addHideMessageHandlers, showServerErrorMessage} from './messaging.js';
+import { showAlert } from './utils.js';
+import {
+  showRequestSuccessMessage,
+  addHideMessageHandlers,
+  showServerErrorMessage
+} from './messaging.js';
 
-function showServerSubmitErrorAlert(){
+const HttpMethods = {
+  Post: 'POST',
+};
+const ApiUrls = {
+  getOffers: 'https://23.javascript.pages.academy/keksobooking/data',
+  postOffer: 'https://23.javascript.pages.academy/keksobooking',
+};
+
+function showServerSubmitErrorAlert() {
   showAlert('Не удалось получить данные');
 }
 
-export async function getOffers(){
-  return fetch('https://23.javascript.pages.academy/keksobooking/data')
-    .then((response) =>{
-      if(!response.ok){
+export async function getOffers() {
+  return fetch(ApiUrls.getOffers)
+    .then((response) => {
+      if (!response.ok) {
         throw new Error('Failed to load data');
       }
       return response.json();
@@ -19,17 +31,13 @@ export async function getOffers(){
     });
 }
 
-
-export function postOffer(offerData, onSuccess){
-  fetch(
-    'https://23.javascript.pages.academy/keksobooking',
-    {
-      method: 'POST',
-      body: offerData,
-    },
-  )
+export function postOffer(offerData, onSuccess) {
+  fetch(ApiUrls.postOffer, {
+    method: HttpMethods.Post,
+    body: offerData,
+  })
     .then((response) => {
-      if(!response.ok){
+      if (!response.ok) {
         throw new Error('Failed to load data');
       }
       showRequestSuccessMessage();
@@ -42,4 +50,3 @@ export function postOffer(offerData, onSuccess){
       throw error;
     });
 }
-

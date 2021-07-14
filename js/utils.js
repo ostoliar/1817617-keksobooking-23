@@ -2,7 +2,7 @@ export function getNumericValue(value) {
   return Number.parseInt(value, 10);
 }
 
-const alertSyles = {
+const alertStyles = {
   zIndex: 100,
   position: 'absolute',
   left: 0,
@@ -20,7 +20,7 @@ const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 export function showAlert(message) {
   const alertContainer = document.createElement('div');
 
-  for (const [key, value] of Object.entries(alertSyles)) {
+  for (const [key, value] of Object.entries(alertStyles)) {
     alertContainer.style[key] = value;
   }
   alertContainer.textContent = message;

@@ -2,16 +2,16 @@ import {
   roomNumber as roomNumberElement,
   capacity as capacityElement
 } from './form.js';
-import {getNumericValue} from './utils.js';
+import { getNumericValue } from './utils.js';
 
 const addressCoordinates = document.querySelector('#address');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 const formTitle = document.querySelector('#title');
 const priceInput = document.querySelector('#price');
-const appartmentType = document.querySelector('#type');
+const apartmentType = document.querySelector('#type');
 
-const appartmentPrice = {
+const apartmentPrice = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
@@ -19,9 +19,11 @@ const appartmentPrice = {
   palace: 10000,
 };
 
-function checkAddressValidity(){
+function checkAddressValidity() {
   if (addressCoordinates.validity.valueMissing) {
-    addressCoordinates.setCustomValidity('Обязательное поле, перетяните главный красный маркер на карте для установки адреса');
+    addressCoordinates.setCustomValidity(
+      'Обязательное поле, перетяните главный красный маркер на карте для установки адреса',
+    );
   } else {
     addressCoordinates.setCustomValidity('');
   }
@@ -65,18 +67,19 @@ function setAvailableCapacityOptions() {
   const roomNumber = getNumericValue(roomNumberElement.value);
   for (const option of capacityElement.options) {
     const capacity = getNumericValue(option.value);
-    const isBlockedOption =
-      roomNumber === 100
-        ? capacity !== 0
-        : capacity > roomNumber || capacity === 0;
+    const isBlockedOption = roomNumber === 100
+      ? capacity !== 0
+      : capacity > roomNumber || capacity === 0;
     setElementDisabled(option, isBlockedOption);
   }
   capacityElement.querySelector('option:not([disabled])').selected = true;
 }
 
-function reportPriceValidity(){
+function reportPriceValidity() {
   if (priceInput.validity.rangeUnderflow) {
-    priceInput.setCustomValidity(`Значение должно быть более или равно ${priceInput.min}`);
+    priceInput.setCustomValidity(
+      `Значение должно быть более или равно ${priceInput.min}`,
+    );
   } else if (priceInput.validity.rangeOverflow) {
     priceInput.setCustomValidity(
       `Значение не должно превышать ${priceInput.max} символов`,
@@ -90,14 +93,14 @@ function reportPriceValidity(){
   priceInput.reportValidity();
 }
 
-function updatePriceMinValue(){
-  const selectedAppartmentType = appartmentType.value;
-  const minPrice = appartmentPrice[selectedAppartmentType];
+function updatePriceMinValue() {
+  const selectedApartmentType = apartmentType.value;
+  const minPrice = apartmentPrice[selectedApartmentType];
   priceInput.min = minPrice;
   priceInput.placeholder = minPrice;
 }
 
-export function intialize(){
+export function intialize() {
   checkTitleValidity();
   updatePriceMinValue();
   checkAddressValidity();
@@ -110,7 +113,7 @@ export function intialize(){
     formTitle.addEventListener('input', reportTitleValidity);
   });
 
-  appartmentType.onchange = updatePriceMinValue;
+  apartmentType.onchange = updatePriceMinValue;
   priceInput.addEventListener('blur', reportPriceValidity);
   priceInput.addEventListener('invalid', () => {
     priceInput.addEventListener('input', reportPriceValidity);
@@ -121,4 +124,3 @@ export function intialize(){
     timeOut.querySelector(`[value='${timeInValue}']`).selected = 'selected';
   };
 }
-
