@@ -1,4 +1,4 @@
-export function getRandomNumber(from, to) {
+export const getRandomNumber = (from, to) => {
   if (to < from) {
     return {
       error: true,
@@ -15,9 +15,9 @@ export function getRandomNumber(from, to) {
   const roundedTo = Math.floor(to);
   return Math.floor(Math.random() * (roundedTo - roundedFrom + 1)) + roundedFrom;
 
-}
+};
 
-export function getRandomCoordinates(from, to, quantityAfterDecimal) {
+export const getRandomCoordinates = (from, to, quantityAfterDecimal) => {
   if (to < from) {
     return {
       error: true,
@@ -39,4 +39,4 @@ export function getRandomCoordinates(from, to, quantityAfterDecimal) {
     error: false,
     data: coordinates,
   };
-}
+};

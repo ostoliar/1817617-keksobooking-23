@@ -3,13 +3,13 @@ import { isEscEvent } from './utils.js';
 const mainBlock = document.querySelector('.notice');
 const handlers = [];
 
-function showMessage(elementSelector) {
+const showMessage = (elementSelector) => {
   const template = document.querySelector(elementSelector).content;
   const message = template.cloneNode(true);
   mainBlock.appendChild(message);
-}
+};
 
-function hideMessage(elementSelector) {
+const hideMessage = (elementSelector) => {
   const message = document.querySelector(elementSelector);
   message.classList.add('hidden');
   message.parentNode.removeChild(message);
@@ -17,9 +17,9 @@ function hideMessage(elementSelector) {
     document.removeEventListener(item.name, item.handler),
   );
   handlers.length = 0;
-}
+};
 
-export function addHideMessageHandlers(elementSelector) {
+export const addHideMessageHandlers = (elementSelector) => {
   handlers.push({
     name: 'keydown',
     handler: () => {
@@ -37,18 +37,18 @@ export function addHideMessageHandlers(elementSelector) {
   handlers.forEach((item) =>
     document.addEventListener(item.name, item.handler),
   );
-}
+};
 
-export function showServerErrorMessage() {
+export const showServerErrorMessage = () => {
   showMessage('#error');
   addHideMessageHandlers('.error');
   const closeAlertButton = document.querySelector('.error__button');
   closeAlertButton.addEventListener('click', () => {
     hideMessage('.error');
   });
-}
+};
 
-export function showRequestSuccessMessage() {
+export const showRequestSuccessMessage = () => {
   showMessage('#success');
   addHideMessageHandlers('.success');
-}
+};

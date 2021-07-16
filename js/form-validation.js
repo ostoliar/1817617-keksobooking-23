@@ -19,7 +19,7 @@ const apartmentPrice = {
 };
 
 
-function checkTitleValidity() {
+const checkTitleValidity = () => {
   if (formTitle.validity.tooShort) {
     formTitle.setCustomValidity(
       `Имя должно состоять минимум из ${formTitle.minLength} символов. Введено ${formTitle.value.length} символов`,
@@ -33,22 +33,22 @@ function checkTitleValidity() {
   } else {
     formTitle.setCustomValidity('');
   }
-}
+};
 
-function reportTitleValidity() {
+const reportTitleValidity = () => {
   checkTitleValidity();
   formTitle.reportValidity();
-}
+};
 
-function setElementDisabled(element, isDisabled) {
+const setElementDisabled = (element, isDisabled) => {
   if (isDisabled) {
     element.setAttribute('disabled', true);
   } else {
     element.removeAttribute('disabled');
   }
-}
+};
 
-function setAvailableCapacityOptions() {
+const setAvailableCapacityOptions = () => {
   const roomNumber = getNumericValue(roomNumberElement.value);
   for (const option of capacityElement.options) {
     const capacity = getNumericValue(option.value);
@@ -58,9 +58,9 @@ function setAvailableCapacityOptions() {
     setElementDisabled(option, isBlockedOption);
   }
   capacityElement.querySelector('option:not([disabled])').selected = true;
-}
+};
 
-function reportPriceValidity() {
+const reportPriceValidity = () => {
   if (priceInput.validity.rangeUnderflow) {
     priceInput.setCustomValidity(
       `Значение должно быть более или равно ${priceInput.min}`,
@@ -76,16 +76,16 @@ function reportPriceValidity() {
   }
 
   priceInput.reportValidity();
-}
+};
 
-function updatePriceMinValue() {
+const updatePriceMinValue = () => {
   const selectedApartmentType = apartmentType.value;
   const minPrice = apartmentPrice[selectedApartmentType];
   priceInput.min = minPrice;
   priceInput.placeholder = minPrice;
-}
+};
 
-export function intialize() {
+export const intialize = () => {
   checkTitleValidity();
   updatePriceMinValue();
   setAvailableCapacityOptions();
@@ -102,13 +102,13 @@ export function intialize() {
     priceInput.addEventListener('input', reportPriceValidity);
   });
 
-  timeIn.onchange = function (evt) {
+  timeIn.onchange = (evt) => {
     const timeInValue = evt.target.value;
     timeOut.querySelector(`[value='${timeInValue}']`).selected = 'selected';
   };
 
-  timeOut.onchange = function (evt) {
+  timeOut.onchange = (evt) => {
     const timeOutValue = evt.target.value;
     timeIn.querySelector(`[value='${timeOutValue}']`).selected = 'selected';
   };
-}
+};

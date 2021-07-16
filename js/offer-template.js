@@ -2,58 +2,59 @@ import { getRandomNumber } from './random-number.js';
 
 const template = document.querySelector('#card').content;
 
-function setTitle(newTemplate, title) {
+const setTitle = (newTemplate, title) => {
   const popupTitle = newTemplate.querySelector('.popup__title');
   popupTitle.textContent = title;
-}
+};
 
-function setPrice(newTemplate, price) {
+const setPrice = (newTemplate, price) => {
   const templatePriceArea = newTemplate.querySelector('.popup__text--price');
   templatePriceArea.textContent = price;
-}
+};
 
-function setAddress(newTemplate, address) {
+const setAddress = (newTemplate, address) => {
   const templateAddress = newTemplate.querySelector('.popup__text--address');
   templateAddress.textContent = address;
-}
+};
 
-function setApartmentType(newTemplate, type) {
+const setApartmentType = (newTemplate, type) => {
   const templateTypeOfApartment = newTemplate.querySelector('.popup__type');
   templateTypeOfApartment.textContent = type;
-}
+};
 
-function setTimeArrival(newTemplate, checkin, checkout) {
+const setTimeArrival = (newTemplate, checkin, checkout) => {
   const templateTimeArea = newTemplate.querySelector('.popup__text--time');
   templateTimeArea.textContent = `Заезд  ${checkin},  ${checkout}`;
-}
+};
 
-function setCapacity(newTemplate, rooms, guests) {
+const setCapacity = (newTemplate, rooms, guests) => {
   const templateCapacity = newTemplate.querySelector('.popup__text--capacity');
   templateCapacity.textContent = `${rooms}  ${guests}`;
-}
+};
 
-function setDescription(newTemplate, description) {
+const setDescription = (newTemplate, description) => {
   const templateDescription = newTemplate.querySelector('.popup__description');
   templateDescription.textContent = description;
   if (description === '') {
     templateDescription.style.display = 'none';
   }
-}
-function setAvatar(newTemplate, avatar) {
+};
+
+const setAvatar = (newTemplate, avatar) => {
   const templateAvatar = newTemplate.querySelector('.popup__avatar');
   templateAvatar.src = `${avatar + 0 + getRandomNumber(1,9)}.png`;
-}
+};
 
-function setFeatures(newTemplate, features) {
+const setFeatures = (newTemplate, features) => {
   features.forEach((selectedFeature) => {
     const elem = newTemplate.querySelector(
       `.popup__feature--${selectedFeature}`,
     );
     elem.classList.add('show');
   });
-}
+};
 
-function setPhotos(newTemplate, photos) {
+const setPhotos = (newTemplate, photos) => {
   for (let index = 0; index < photos.length; index++) {
     const templatePhotos = newTemplate.querySelector('.popup__photos');
     const imgElement = document.createElement('img');
@@ -63,9 +64,9 @@ function setPhotos(newTemplate, photos) {
     imgElement.setAttribute('alt', 'Фотография жилья');
     templatePhotos.appendChild(imgElement);
   }
-}
+};
 
-export function getOfferTemplate(offer) {
+export const getOfferTemplate = (offer) => {
   const newItemTemplate = template.querySelector('.popup');
   const newTemplate = newItemTemplate.cloneNode(true);
   const author = {
@@ -87,4 +88,4 @@ export function getOfferTemplate(offer) {
   setDescription(newTemplate, offer.description);
   setAvatar(newTemplate, author.avatar);
   return newTemplate;
-}
+};

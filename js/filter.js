@@ -15,20 +15,18 @@ export const PriceOptions = {
 };
 
 
-function getFilterData() {
-  return {
-    price: priceElement.value,
-    features: [
-      ...filterForm.querySelectorAll('input.map__checkbox:checked'),
-    ].map((element) => element.value),
-    type: apartmentTypeElement.options[apartmentTypeElement.selectedIndex]
-      .value,
-    rooms: roomNumberElement.options[roomNumberElement.selectedIndex].value,
-    guests: capacityElement.options[capacityElement.selectedIndex].value,
-  };
-}
+export const getFilterData = () => ({
+  price: priceElement.value,
+  features: [
+    ...filterForm.querySelectorAll('input.map__checkbox:checked'),
+  ].map((element) => element.value),
+  type: apartmentTypeElement.options[apartmentTypeElement.selectedIndex]
+    .value,
+  rooms: roomNumberElement.options[roomNumberElement.selectedIndex].value,
+  guests: capacityElement.options[capacityElement.selectedIndex].value,
+});
 
-export function initialize(filterChanged) {
+export const initialize = (filterChanged) => {
   filterChanged(getFilterData());
   const changeElements = [
     apartmentTypeElement,
@@ -40,9 +38,9 @@ export function initialize(filterChanged) {
   changeElements.forEach((item) => {
     item.onchange = debounce(() => filterChanged(getFilterData()), 500);
   });
-}
+};
 
-export function disable() {
+export const disable = () => {
   filterForm.style.pointerEvents = 'none';
   filterForm.style.opacity = '0.3';
-}
+};

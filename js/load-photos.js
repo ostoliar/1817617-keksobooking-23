@@ -7,7 +7,7 @@ const previewApartmentPhotos = document.querySelector('.ad-form__photo');
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-function loadImage(fileChooseElement, imageElement) {
+const loadImage = (fileChooseElement, imageElement) => {
   const file = fileChooseElement.files[0];
   const fileName = file.name.toLowerCase();
 
@@ -22,9 +22,9 @@ function loadImage(fileChooseElement, imageElement) {
 
     reader.readAsDataURL(file);
   }
-}
+};
 
-function createImageElement() {
+const createImageElement = () => {
   const img = document.createElement('img');
   img.classList.add('user-photo');
   img.style.width = '70px';
@@ -34,9 +34,9 @@ function createImageElement() {
   previewApartmentPhotos.style.backgroundColor = '#f0f0ea';
   previewApartmentPhotos.style.width = '100%';
   return img;
-}
+};
 
-export function initialize() {
+export const initialize = () => {
   fileChooserAvatar.addEventListener('change', () => {
     loadImage(fileChooserAvatar, previewAvatar);
   });
@@ -44,6 +44,6 @@ export function initialize() {
     const img = createImageElement();
     loadImage(fileChooserApartmentPhotos, img);
   });
-}
+};
 
 

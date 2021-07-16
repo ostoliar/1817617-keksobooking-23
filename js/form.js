@@ -23,33 +23,31 @@ const offer = {
   ],
 };
 
-function getFormData() {
-  return {
-    title: titleElement.value,
-    price: priceElement.value,
-    features: [
-      ...form.querySelectorAll('.features input:checked'),
-    ].map((element) => element.value),
-    address: addressElement.value,
-    type:
+const getFormData = () => ({
+  title: titleElement.value,
+  price: priceElement.value,
+  features: [
+    ...form.querySelectorAll('.features input:checked'),
+  ].map((element) => element.value),
+  address: addressElement.value,
+  type:
       appartmentTypeElement.options[appartmentTypeElement.selectedIndex].text,
-    description: descriptionElement.value,
-    rooms: roomNumberElement.options[roomNumberElement.selectedIndex].text,
-    guests: capacityElement.options[capacityElement.selectedIndex].text,
-    checkin: timeInElement.options[timeInElement.selectedIndex].text,
-    checkout: timeOutElement.options[timeOutElement.selectedIndex].text,
-    photos: offer.photos,
-  };
-}
+  description: descriptionElement.value,
+  rooms: roomNumberElement.options[roomNumberElement.selectedIndex].text,
+  guests: capacityElement.options[capacityElement.selectedIndex].text,
+  checkin: timeInElement.options[timeInElement.selectedIndex].text,
+  checkout: timeOutElement.options[timeOutElement.selectedIndex].text,
+  photos: offer.photos,
+});
 
-function cleanCheckBoxes(items) {
+const cleanCheckBoxes = (items) => {
   for (let item = 0; item < items.length; item++) {
     items[item].checked = false;
   }
-}
+};
 
 
-function cleanupFilterForm() {
+const cleanupFilterForm = () => {
   const housingType = document.querySelector('#housing-type');
   const housingPrice = document.querySelector('#housing-price');
   const housingRooms = document.querySelector('#housing-rooms');
@@ -60,9 +58,9 @@ function cleanupFilterForm() {
   housingRooms.selectedIndex = 0;
   housingGuests.selectedIndex = 0;
   cleanCheckBoxes(housingFeatures);
-}
+};
 
-function cleanupForm() {
+const cleanupForm = () => {
   titleElement.value = '';
   descriptionElement.value = '';
   appartmentTypeElement.selectedIndex = 1;
@@ -78,11 +76,11 @@ function cleanupForm() {
   });
   const featuresCheckboxes = document.querySelectorAll('.features__checkbox');
   cleanCheckBoxes(featuresCheckboxes);
-}
+};
 
-function closePopup() {
+const closePopup = () => {
   myMap.closePopup();
-}
+};
 
 resetButton.addEventListener('click', () => {
   resetMainMarker();

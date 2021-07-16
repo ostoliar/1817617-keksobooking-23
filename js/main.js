@@ -7,39 +7,33 @@ import { resetAllMarkers } from './map.js';
 import { getNumericValue } from './utils.js';
 import { ANY_VALUE, initialize as initializeFilter, PriceOptions, disable as disableFilter } from './filter.js';
 
-function typeMatches(offer, filterData) {
-  return filterData.type === ANY_VALUE || filterData.type === offer.type;
-}
+const typeMatches = (offer, filterData) => filterData.type === ANY_VALUE || filterData.type === offer.type;
 
-function guestsMatch(offer, filterData) {
-  return (
-    filterData.guests === ANY_VALUE ||
+const guestsMatch = (offer, filterData) => (
+  filterData.guests === ANY_VALUE ||
     getNumericValue(filterData.guests) < offer.guests
-  );
-}
+);
 
-function roomsMatch(offer, filterData) {
-  return (
-    filterData.rooms === ANY_VALUE ||
+const roomsMatch = (offer, filterData) => (
+  filterData.rooms === ANY_VALUE ||
     getNumericValue(filterData.rooms) === offer.rooms
-  );
-}
+);
 
-function featuresMatch(offer, filterData) {
+const featuresMatch = (offer, filterData) => {
   const offerFeatures = offer.features || [];
   return filterData.features.every((item) => offerFeatures.includes(item));
-}
+};
 
-function priceMatches(offer, filterData) {
+const priceMatches = (offer, filterData) => {
   const priceRange = PriceOptions[filterData.price];
   return (
     filterData.price === ANY_VALUE ||
     offer.price > priceRange.from ||
     offer.price < priceRange.to
   );
-}
+};
 
-function filterOffer(offer, filterData) {
+const filterOffer = (offer, filterData) => {
   if (
     typeMatches(offer, filterData) &&
     guestsMatch(offer, filterData) &&
@@ -50,9 +44,9 @@ function filterOffer(offer, filterData) {
     return true;
   }
   return false;
-}
+};
 
-async function loadOffers() {
+const loadOffers = async () => {
   let offers = [];
   try {
     offers = await getOffers();
@@ -70,7 +64,7 @@ async function loadOffers() {
         setMapMarker(item.location, offerTemplate);
       });
   });
-}
+};
 
 intializeFormValidation();
 initializeLoadPhoto();

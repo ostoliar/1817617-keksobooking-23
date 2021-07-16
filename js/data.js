@@ -13,39 +13,35 @@ const ApiUrls = {
   postOffer: 'https://23.javascript.pages.academy/keksobooking',
 };
 
-function showServerSubmitErrorAlert() {
+const showServerSubmitErrorAlert = () => {
   showAlert('Не удалось получить данные');
-}
+};
 
-export async function getOffers() {
-  return fetch(ApiUrls.getOffers)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Failed to load data');
-      }
-      return response.json();
-    })
-    .catch((error) => {
-      showServerSubmitErrorAlert();
-      throw error;
-    });
-}
-
-export async function postOffer(offerData) {
-  return fetch(ApiUrls.postOffer, {
-    method: HttpMethods.Post,
-    body: offerData,
+export const getOffers = async () => fetch(ApiUrls.getOffers)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Failed to load data');
+    }
+    return response.json();
   })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Failed to load data');
-      }
-      showRequestSuccessMessage();
-      addHideMessageHandlers();
-    })
-    .catch((error) => {
-      showServerErrorMessage();
-      addHideMessageHandlers();
-      throw error;
-    });
-}
+  .catch((error) => {
+    showServerSubmitErrorAlert();
+    throw error;
+  });
+
+export const postOffer = async (offerData) => fetch(ApiUrls.postOffer, {
+  method: HttpMethods.Post,
+  body: offerData,
+})
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Failed to load data');
+    }
+    showRequestSuccessMessage();
+    addHideMessageHandlers();
+  })
+  .catch((error) => {
+    showServerErrorMessage();
+    addHideMessageHandlers();
+    throw error;
+  });

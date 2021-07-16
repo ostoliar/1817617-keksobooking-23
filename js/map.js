@@ -68,28 +68,28 @@ mainMarker.on('moveend', (evt) => {
   setMarkerCoordinates.dispatchEvent(new Event('input'));
 });
 
-export function setMapMarker(location, offerTemplate) {
+export const setMapMarker = (location, offerTemplate) => {
   const marker = L.marker(location)
     .addTo(myMap)
     .bindPopup(offerTemplate);
   markers.push(marker);
-}
+};
 
-export function setSubmittedMapMarker(offerTemplate) {
+export const setSubmittedMapMarker = (offerTemplate) => {
   setMapMarker(coordinates, offerTemplate);
-}
+};
 
-export function resetMainMarker() {
+export const resetMainMarker = () => {
   mainMarker.setLatLng({
     lat: latitude,
     lng: longitude,
   });
-}
+};
 
-export function resetAllMarkers() {
+export const resetAllMarkers = () => {
   markers.forEach((item) => {
     myMap.removeLayer(item);
   });
-}
+};
 
 export {tileLayer, myMap};
