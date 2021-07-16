@@ -2,12 +2,12 @@ import { form } from './form.js';
 
 const webToken =
   'pk.eyJ1IjoiZXJ0ZWthIiwiYSI6ImNrcHgydmJrMjEyaDYybm56OHkzZWg4cjEifQ.DtvAiyAnZ6L54Jt7OCE7Dg';
-const latitude = 35.6795;
-const longitude = 139.69171;
+const CITY_CENTER_LATITUDE = 35.6795;
+const CITY_CENTER_LONGITUDE = 139.69171;
 const markers = [];
 
 // L - its var of leaflet library
-const myMap = L.map('mapId').setView([latitude, longitude], 13);
+const myMap = L.map('mapId').setView([CITY_CENTER_LATITUDE, CITY_CENTER_LONGITUDE], 13);
 const leafletOptions = {
   attribution:
     'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -36,11 +36,10 @@ const mainPinIcon = L.icon({
   iconAnchor: [26, 52],
 });
 
-
 const mainMarker = L.marker(
   {
-    lat: latitude,
-    lng: longitude,
+    lat: CITY_CENTER_LATITUDE,
+    lng: CITY_CENTER_LONGITUDE,
   },
   {
     draggable: true,
@@ -48,13 +47,17 @@ const mainMarker = L.marker(
   },
 );
 
-mainMarker.addTo(myMap);
+const setMarkerCoordinatesField = (lat, lng) => {
+  const setMarkerCoordinates = document.querySelector('#address');
+  setMarkerCoordinates.value = `${lat}, ${lng}`;
+};
 
-const setMarkerCoordinates = document.querySelector('#address');
-setMarkerCoordinates.value = `${latitude}, ${longitude}`;
+mainMarker.addTo(myMap);
+setMarkerCoordinatesField(CITY_CENTER_LATITUDE, CITY_CENTER_LONGITUDE);
+
 let coordinates = {
-  lat: latitude,
-  lng: longitude,
+  lat: CITY_CENTER_LATITUDE,
+  lng: CITY_CENTER_LONGITUDE,
 };
 mainMarker.on('moveend', (evt) => {
   const targetCoordinates = evt.target.getLatLng();
@@ -64,8 +67,7 @@ mainMarker.on('moveend', (evt) => {
     lat: targetLatitude,
     lng: targetLongitude,
   };
-  setMarkerCoordinates.value = `${targetLatitude}, ${targetLongitude}`;
-  setMarkerCoordinates.dispatchEvent(new Event('input'));
+  setMarkerCoordinatesField(targetLatitude, targetLongitude);
 });
 
 export const setMapMarker = (location, offerTemplate) => {
@@ -81,9 +83,10 @@ export const setSubmittedMapMarker = (offerTemplate) => {
 
 export const resetMainMarker = () => {
   mainMarker.setLatLng({
-    lat: latitude,
-    lng: longitude,
+    lat: CITY_CENTER_LATITUDE,
+    lng: CITY_CENTER_LONGITUDE,
   });
+  setMarkerCoordinatesField(CITY_CENTER_LATITUDE, CITY_CENTER_LONGITUDE);
 };
 
 export const resetAllMarkers = () => {

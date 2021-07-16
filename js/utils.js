@@ -16,7 +16,6 @@ const alertStyles = {
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-
 export const showAlert = (message) => {
   const alertContainer = document.createElement('div');
 
@@ -31,5 +30,10 @@ export const showAlert = (message) => {
   }, 3000);
 };
 
+export const resetCheckBoxes = (items) => {
+  for (let item = 0; item < items.length; item++) {
+    items[item].checked = false;
+  }
+};
 
 export { isEscEvent };

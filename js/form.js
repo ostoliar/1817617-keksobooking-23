@@ -1,7 +1,9 @@
 import { getOfferTemplate } from './offer-template.js';
 import { setSubmittedMapMarker, resetMainMarker } from './map.js';
 import { postOffer } from './data.js';
-import {  myMap } from './map.js';
+import { myMap } from './map.js';
+import { resetCheckBoxes } from './utils.js';
+import { reset as resetFilterForm}  from './filter.js';
 
 const form = document.querySelector('.ad-form');
 const roomNumberElement = form.querySelector('#room_number');
@@ -40,27 +42,7 @@ const getFormData = () => ({
   photos: offer.photos,
 });
 
-const cleanCheckBoxes = (items) => {
-  for (let item = 0; item < items.length; item++) {
-    items[item].checked = false;
-  }
-};
-
-
-const cleanupFilterForm = () => {
-  const housingType = document.querySelector('#housing-type');
-  const housingPrice = document.querySelector('#housing-price');
-  const housingRooms = document.querySelector('#housing-rooms');
-  const housingGuests = document.querySelector('#housing-guests');
-  const housingFeatures = document.querySelectorAll('.map__checkbox');
-  housingType.selectedIndex = 0;
-  housingPrice.selectedIndex = 0;
-  housingRooms.selectedIndex = 0;
-  housingGuests.selectedIndex = 0;
-  cleanCheckBoxes(housingFeatures);
-};
-
-const cleanupForm = () => {
+const resetForm = () => {
   titleElement.value = '';
   descriptionElement.value = '';
   appartmentTypeElement.selectedIndex = 1;
@@ -75,7 +57,7 @@ const cleanupForm = () => {
     item.parentNode.removeChild(item);
   });
   const featuresCheckboxes = document.querySelectorAll('.features__checkbox');
-  cleanCheckBoxes(featuresCheckboxes);
+  resetCheckBoxes(featuresCheckboxes);
 };
 
 const closePopup = () => {
@@ -84,11 +66,10 @@ const closePopup = () => {
 
 resetButton.addEventListener('click', () => {
   resetMainMarker();
-  cleanupFilterForm();
-  cleanupForm();
+  resetFilterForm();
+  resetForm();
   closePopup();
 });
-
 
 form.addEventListener('submit', async (evt) => {
   evt.preventDefault();
@@ -105,8 +86,8 @@ form.addEventListener('submit', async (evt) => {
 
   }
   setSubmittedMapMarker(offerTemplate);
-  cleanupForm();
-  cleanupFilterForm();
+  resetForm();
+  resetFilterForm();
 });
 
 

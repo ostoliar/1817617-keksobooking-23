@@ -1,3 +1,4 @@
+import { resetCheckBoxes } from './utils.js';
 import { debounce } from './utils/debounce.js';
 
 const filterForm = document.querySelector('.map__filters');
@@ -6,6 +7,7 @@ const roomNumberElement = filterForm.querySelector('#housing-rooms');
 const capacityElement = filterForm.querySelector('#housing-guests');
 const featureInputElements = filterForm.querySelectorAll('input.map__checkbox');
 const priceElement = filterForm.querySelector('#housing-price');
+let filterChangedHandler = null;
 
 export const ANY_VALUE = 'any';
 export const PriceOptions = {
@@ -13,7 +15,6 @@ export const PriceOptions = {
   middle: { from: 10000, to: 50000 },
   high: { from: 50000, to: Infinity },
 };
-
 
 export const getFilterData = () => ({
   price: priceElement.value,
@@ -27,7 +28,8 @@ export const getFilterData = () => ({
 });
 
 export const initialize = (filterChanged) => {
-  filterChanged(getFilterData());
+  filterChangedHandler = filterChanged;
+  filterChangedHandler(getFilterData());
   const changeElements = [
     apartmentTypeElement,
     roomNumberElement,
@@ -36,11 +38,21 @@ export const initialize = (filterChanged) => {
     priceElement,
   ];
   changeElements.forEach((item) => {
-    item.onchange = debounce(() => filterChanged(getFilterData()), 500);
+    item.onchange = debounce(() => filterChangedHandler(getFilterData()), 500);
   });
 };
 
 export const disable = () => {
   filterForm.style.pointerEvents = 'none';
   filterForm.style.opacity = '0.3';
+};
+
+export const reset = () => {
+  const housingFeatures = document.querySelectorAll('.map__checkbox');
+  apartmentTypeElement.selectedIndex = 0;
+  priceElement.selectedIndex = 0;
+  roomNumberElement.selectedIndex = 0;
+  capacityElement.selectedIndex = 0;
+  resetCheckBoxes(housingFeatures);
+  filterChangedHandler(getFilterData());
 };
