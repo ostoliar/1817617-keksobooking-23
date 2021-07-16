@@ -92,19 +92,23 @@ resetButton.addEventListener('click', () => {
 });
 
 
-form.addEventListener('submit', (evt) => {
+form.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const formData = getFormData();
   const offerTemplate = getOfferTemplate(formData);
-  setSubmittedMapMarker(offerTemplate);
   const offerData = new FormData(form);
 
-  postOffer(offerData, () => {
+  try {
+    await postOffer(offerData);
+  }
+  finally {
     resetMainMarker();
-    cleanupForm();
-    cleanupFilterForm();
     closePopup();
-  });
+
+  }
+  setSubmittedMapMarker(offerTemplate);
+  cleanupForm();
+  cleanupFilterForm();
 });
 
 

@@ -31,8 +31,8 @@ export async function getOffers() {
     });
 }
 
-export function postOffer(offerData, onSuccess) {
-  fetch(ApiUrls.postOffer, {
+export async function postOffer(offerData) {
+  return fetch(ApiUrls.postOffer, {
     method: HttpMethods.Post,
     body: offerData,
   })
@@ -41,7 +41,6 @@ export function postOffer(offerData, onSuccess) {
         throw new Error('Failed to load data');
       }
       showRequestSuccessMessage();
-      onSuccess();
       addHideMessageHandlers();
     })
     .catch((error) => {
