@@ -52,7 +52,10 @@ mainMarker.addTo(myMap);
 
 const setMarkerCoordinates = document.querySelector('#address');
 setMarkerCoordinates.value = `${latitude}, ${longitude}`;
-let coordinates = null;
+let coordinates = {
+  lat: latitude,
+  lng: longitude,
+};
 mainMarker.on('moveend', (evt) => {
   const targetCoordinates = evt.target.getLatLng();
   const targetLatitude = targetCoordinates.lat.toFixed(5);
@@ -73,9 +76,7 @@ export function setMapMarker(location, offerTemplate) {
 }
 
 export function setSubmittedMapMarker(offerTemplate) {
-  if (coordinates) {
-    setMapMarker(coordinates, offerTemplate);
-  }
+  setMapMarker(coordinates, offerTemplate);
 }
 
 export function resetMainMarker() {

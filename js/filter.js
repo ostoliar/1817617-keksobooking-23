@@ -14,6 +14,7 @@ export const PriceOptions = {
   high: { from: 50000, to: Infinity },
 };
 
+
 function getFilterData() {
   return {
     price: priceElement.value,
@@ -39,4 +40,9 @@ export function initialize(filterChanged) {
   changeElements.forEach((item) => {
     item.onchange = debounce(() => filterChanged(getFilterData()), 500);
   });
+}
+
+export function disable() {
+  filterForm.style.pointerEvents = 'none';
+  filterForm.style.opacity = '0.3';
 }

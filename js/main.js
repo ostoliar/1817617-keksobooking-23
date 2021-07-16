@@ -3,10 +3,9 @@ import { setMapMarker } from './map.js';
 import { intialize as intializeFormValidation } from './form-validation.js';
 import { getOffers } from './data.js';
 import { initialize as initializeLoadPhoto } from './load-photos.js';
-import { ANY_VALUE, initialize as initializeFilter } from './filter.js';
 import { resetAllMarkers } from './map.js';
 import { getNumericValue } from './utils.js';
-import { PriceOptions } from './filter.js';
+import { ANY_VALUE, initialize as initializeFilter, PriceOptions, disable as disableFilter } from './filter.js';
 
 function typeMatches(offer, filterData) {
   return filterData.type === ANY_VALUE || filterData.type === offer.type;
@@ -54,7 +53,13 @@ function filterOffer(offer, filterData) {
 }
 
 async function loadOffers() {
-  const offers = await getOffers();
+  let offers = [];
+  try {
+    offers = await getOffers();
+  } catch (error) {
+    disableFilter();
+    throw error;
+  }
   initializeFilter((filterData) => {
     resetAllMarkers();
     offers
