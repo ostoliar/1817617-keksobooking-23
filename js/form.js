@@ -1,7 +1,7 @@
 import { getOfferTemplate } from './offer-template.js';
 import { setSubmittedMapMarker, resetMainMarker } from './map.js';
-import { offer } from './create-offer.js';
 import { postOffer } from './data.js';
+import {  myMap } from './map.js';
 
 const form = document.querySelector('.ad-form');
 const roomNumberElement = form.querySelector('#room_number');
@@ -14,6 +14,14 @@ const priceElement = form.querySelector('#price');
 const addressElement = form.querySelector('#address');
 const descriptionElement = form.querySelector('#description');
 const avatarPhoto = document.querySelector('#avatar-image');
+const resetButton = document.querySelector('.ad-form__reset');
+const offer = {
+  photos: [
+    'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+    'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+    'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
+  ],
+};
 
 function getFormData() {
   return {
@@ -40,6 +48,7 @@ function cleanCheckBoxes(items) {
   }
 }
 
+
 function cleanupFilterForm() {
   const housingType = document.querySelector('#housing-type');
   const housingPrice = document.querySelector('#housing-price');
@@ -51,8 +60,6 @@ function cleanupFilterForm() {
   housingRooms.selectedIndex = 0;
   housingGuests.selectedIndex = 0;
   cleanCheckBoxes(housingFeatures);
-
-
 }
 
 function cleanupForm() {
@@ -67,12 +74,23 @@ function cleanupForm() {
   timeInElement.selectedIndex = 0;
   timeOutElement.selectedIndex = 0;
   avatarPhoto.src = 'img/muffin-grey.svg';
-  document.querySelectorAll('.user-photo').forEach((item)=>{
+  document.querySelectorAll('.user-photo').forEach((item) => {
     item.parentNode.removeChild(item);
   });
   const featuresCheckboxes = document.querySelectorAll('.features__checkbox');
   cleanCheckBoxes(featuresCheckboxes);
 }
+
+function closePopup() {
+  myMap.closePopup();
+}
+
+resetButton.addEventListener('click', () => {
+  resetMainMarker();
+  cleanupFilterForm();
+  cleanupForm();
+  closePopup();
+});
 
 
 form.addEventListener('submit', (evt) => {
@@ -86,6 +104,7 @@ form.addEventListener('submit', (evt) => {
     resetMainMarker();
     cleanupForm();
     cleanupFilterForm();
+    closePopup();
   });
 });
 

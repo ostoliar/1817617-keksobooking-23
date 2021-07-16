@@ -1,5 +1,4 @@
 import { getRandomNumber } from './random-number.js';
-import { author } from './create-offer.js';
 
 const template = document.querySelector('#card').content;
 
@@ -69,6 +68,9 @@ function setPhotos(newTemplate, photos) {
 export function getOfferTemplate(offer) {
   const newItemTemplate = template.querySelector('.popup');
   const newTemplate = newItemTemplate.cloneNode(true);
+  const author = {
+    avatar: 'img/avatars/user',
+  };
   if (offer.features) {
     setFeatures(newTemplate, offer.features);
   }
