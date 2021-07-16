@@ -51,6 +51,7 @@ const mainMarker = L.marker(
 mainMarker.addTo(myMap);
 
 const setMarkerCoordinates = document.querySelector('#address');
+setMarkerCoordinates.value = `${latitude}, ${longitude}`;
 let coordinates = null;
 mainMarker.on('moveend', (evt) => {
   const targetCoordinates = evt.target.getLatLng();
@@ -60,7 +61,7 @@ mainMarker.on('moveend', (evt) => {
     lat: targetLatitude,
     lng: targetLongitude,
   };
-  setMarkerCoordinates.value = `lat: ${targetLatitude}, lng: ${targetLongitude}`;
+  setMarkerCoordinates.value = `${targetLatitude}, ${targetLongitude}`;
   setMarkerCoordinates.dispatchEvent(new Event('input'));
 });
 

@@ -4,7 +4,6 @@ import {
 } from './form.js';
 import { getNumericValue } from './utils.js';
 
-const addressCoordinates = document.querySelector('#address');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 const formTitle = document.querySelector('#title');
@@ -19,20 +18,6 @@ const apartmentPrice = {
   palace: 10000,
 };
 
-function checkAddressValidity() {
-  if (addressCoordinates.validity.valueMissing) {
-    addressCoordinates.setCustomValidity(
-      'Обязательное поле, перетяните главный красный маркер на карте для установки адреса',
-    );
-  } else {
-    addressCoordinates.setCustomValidity('');
-  }
-}
-
-function reportAddressValidity() {
-  checkAddressValidity();
-  addressCoordinates.reportValidity();
-}
 
 function checkTitleValidity() {
   if (formTitle.validity.tooShort) {
@@ -103,11 +88,9 @@ function updatePriceMinValue() {
 export function intialize() {
   checkTitleValidity();
   updatePriceMinValue();
-  checkAddressValidity();
   setAvailableCapacityOptions();
 
   roomNumberElement.onchange = setAvailableCapacityOptions;
-  addressCoordinates.addEventListener('input', reportAddressValidity);
   formTitle.addEventListener('blur', reportTitleValidity);
   formTitle.addEventListener('invalid', () => {
     formTitle.addEventListener('input', reportTitleValidity);
@@ -122,5 +105,10 @@ export function intialize() {
   timeIn.onchange = function (evt) {
     const timeInValue = evt.target.value;
     timeOut.querySelector(`[value='${timeInValue}']`).selected = 'selected';
+  };
+
+  timeOut.onchange = function (evt) {
+    const timeOutValue = evt.target.value;
+    timeIn.querySelector(`[value='${timeOutValue}']`).selected = 'selected';
   };
 }

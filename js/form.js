@@ -64,7 +64,6 @@ function cleanupFilterForm() {
 
 function cleanupForm() {
   titleElement.value = '';
-  addressElement.value = '';
   descriptionElement.value = '';
   appartmentTypeElement.selectedIndex = 1;
   appartmentTypeElement.dispatchEvent(new Event('change'));
